@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="template-shootout" default="benchmarks" basedir=".">
+
+  <property name="src"     location="src" />
+  <property name="classes" location="classes" />
+  <property name="lib"     location="lib" />
+  <property environment="env" />
+
+  <path id="project.class.path">
+    <!--
+    <pathelement location="${lib}/velocity-1.7.jar" />
+    <pathelement location="${lib}/velocity-1.7-dep.jar" />
+    -->
+    <pathelement location="${lib}/velocity-1.6.4.jar" />
+    <pathelement location="${lib}/velocity-1.6.4-dep.jar" />
+    <!--
+    -->
+    <!--
+    <pathelement location="${lib}/velocity-1.5.jar" />
+    <pathelement location="${lib}/velocity-dep-1.5.jar" />
+    -->
+  </path>
+
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${classes}" />
+  </target>
+
+  <target name="compile" depends="init">
+    <javac srcdir="${src}" destdir="${classes}" includeantruntime="true">
+      <classpath refid="project.class.path" />
+    </javac>
+  </target>
+
+  <target name="velocity17" depends="compile">
+    <java classname="StocksVelocityBench" output="output.velocity17" logError="true" fork="true">
+      <classpath location="classes" />
+      <classpath location="${lib}/velocity-1.7.jar" />
+      <classpath location="${lib}/velocity-1.7-dep.jar" />
+    </java>
+  </target>
+
+  <target name="velocity16" depends="compile">
+    <java classname="StocksVelocityBench" output="output.velocity16" logError="true" fork="true">
+      <classpath location="classes" />
+      <classpath location="${lib}/velocity-1.6.4.jar" />
+      <classpath location="${lib}/velocity-1.6.4-dep.jar" />
+    </java>
+  </target>
+
+  <target name="velocity15" depends="compile">
+    <java classname="StocksVelocityBench" output="output.velocity15" logError="true" fork="true">
+      <classpath location="classes" />
+      <classpath location="${lib}/velocity-1.5.jar" />
+      <classpath location="${lib}/velocity-dep-1.5.jar" />
+    </java>
+  </target>
+
+  <target name="stringbuilder" depends="compile">
+    <java classname="StocksStringBuilderBench" output="output.stringbuilder" logError="true" fork="true">
+      <classpath location="classes" />
+    </java>
+  </target>
+
+  <target name="kwartzite" depends="compile">
+    <java classname="StocksKwartziteBench" output="output.kwartzite" logError="true" fork="true">
+      <classpath location="classes" />
+    </java>
+  </target>
+
+  <target name="benchmarks" depends="velocity17,velocity16,velocity15,stringbuilder,kwartzite">
+  </target>
+
+  <target name="clean">
+    <delete dir="${classes}" />
+    <delete>
+      <fileset dir="." includes="output.*" />
+    </delete>
+  </target>
+
+</project>
