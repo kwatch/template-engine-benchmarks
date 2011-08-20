@@ -1,0 +1,5 @@
+
+LUA_TOP_DIR=/opt/lang/lua/5.1.4
+#LUA_INIT=@<LDIR>/compat-5.1.lua
+export LUA_PATH=$LUA_TOP_DIR'/share/?.lua;?.lua'
+export LUA_CPATH=$LUA_TOP_DIR'/lib/?.so;?.so'
