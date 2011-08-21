@@ -4,10 +4,15 @@
  * $License: Creative Commons Attribution (CC BY) $
  */
 
+/*
+ *  Are you a C++ expert? PLEASE ADVICE ME!
+ */
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <vector>
 #include <iostream>
 //#include <time.h>
 #include <sys/time.h>
@@ -72,6 +77,52 @@ void task_strcat2(int loop) {
 }
 
 
+void task_vector1(int loop) {
+    const char *s1 = members[0], *s2 = members[1], *s3 = members[2], *s4 = members[3], *s5 = members[4];
+    while (--loop >= 0) {
+        std::vector<const char*> buf;
+        //
+        buf.push_back("<table>\n");
+        for (int j = 0; j < 20; j++) {
+            buf.push_back("  <tr>\n"
+"    <td>"); buf.push_back(s1); buf.push_back("</td>\n"
+"    <td>"); buf.push_back(s2); buf.push_back("</td>\n"
+"    <td>"); buf.push_back(s3); buf.push_back("</td>\n"
+"    <td>"); buf.push_back(s4); buf.push_back("</td>\n"
+"    <td>"); buf.push_back(s5); buf.push_back("</td>\n"
+"  </tr>\n");
+        }
+        buf.push_back("</table>\n");
+        //
+        //if (loop == 1) std::cout << buf;
+        //printf("*** debug: buf.size()=%d\n", buf.size());
+    }
+}
+
+
+void task_vector2(int loop) {
+    const char *s1 = members[0], *s2 = members[1], *s3 = members[2], *s4 = members[3], *s5 = members[4];
+    while (--loop >= 0) {
+        std::vector<const char*> buf(256);
+        //
+        buf.push_back("<table>\n");
+        for (int j = 0; j < 20; j++) {
+            buf.push_back("  <tr>\n"
+"    <td>"); buf.push_back(s1); buf.push_back("</td>\n"
+"    <td>"); buf.push_back(s2); buf.push_back("</td>\n"
+"    <td>"); buf.push_back(s3); buf.push_back("</td>\n"
+"    <td>"); buf.push_back(s4); buf.push_back("</td>\n"
+"    <td>"); buf.push_back(s5); buf.push_back("</td>\n"
+"  </tr>\n");
+        }
+        buf.push_back("</table>\n");
+        //
+        //if (loop == 1) std::cout << buf;
+        //printf("*** debug: buf.size()=%d\n", buf.size());
+    }
+}
+
+
 double run(const char *title, void (*body)(int loop_), int loop, double empty_time) {
     struct timeval start, stop;
     gettimeofday(&start, NULL);
@@ -99,9 +150,11 @@ int main(int argc, char *argv[]) {
         printf("\n");
         printf("# cycle=%d %25s %10s %10s\n", i, " ", "real", "actual");
         empty_time = \
-        run("(Empty)",               task_empty,   loop, empty_time);
-        run("string.append()",       task_strcat1, loop, empty_time);
-        run("string.append(4*1024)", task_strcat2, loop, empty_time);
+        run("(Empty)",                 task_empty,   loop, empty_time);
+        run("string().append()",       task_strcat1, loop, empty_time);
+        run("string(4*1024).append()", task_strcat2, loop, empty_time);
+        run("vector.push_back() (no join)",       task_vector1, loop, empty_time);
+        run("vector(256).push_back() (no join)",  task_vector2, loop, empty_time);
     }
     //
     return 0;
