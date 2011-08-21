@@ -30,6 +30,7 @@ end
 
 
 loop = 0 + (os.getenv('N') or 100*1000)
+debug = os.getenv('D') or false
 
 bm = benchmarker.Benchmarker.new(loop)
 
@@ -66,7 +67,7 @@ function bench_strcat1(n)
 		end
 		buf = buf .. "</table>\n"
 	end
-	verify(buf)
+	if debug then verify(buf) end
 end
 bm:task(title, bench_strcat1)
 
@@ -91,13 +92,38 @@ function bench_strcat2(n)
 		buf[#buf+1] = "</table>\n"
 		out = table.concat(buf);
 	end
-	verify(out)
+	if debug then verify(buf) end
 end
 bm:task(title, bench_strcat2)
 
 
-title = "table.insert();table.concat()"
+title = "buf[#buf+1]=str only (no concat)"
 function bench_strcat3(n)
+	local m = members
+	local s1, s2, s3, s4, s5 = m[1], m[2], m[3], m[4], m[5]
+	local out
+	for i = 1, n do
+		buf = {}
+		buf[#buf+1] = "<table>\n"
+		for j = 1, 20 do
+			buf[#buf+1] = "  <tr>\
+    <td>"; buf[#buf+1] = s1; buf[#buf+1] = "</td>\
+    <td>"; buf[#buf+1] = s2; buf[#buf+1] = "</td>\
+    <td>"; buf[#buf+1] = s3; buf[#buf+1] = "</td>\
+    <td>"; buf[#buf+1] = s4; buf[#buf+1] = "</td>\
+    <td>"; buf[#buf+1] = s5; buf[#buf+1] = "</td>\
+  </tr>\n";
+		end
+		buf[#buf+1] = "</table>\n"
+		--out = table.concat(buf);
+	end
+	--if debug then verify(buf) end
+end
+bm:task(title, bench_strcat3)
+
+
+title = "table.insert();table.concat()"
+function bench_strcat4(n)
 	local m = members
 	local s1, s2, s3, s4, s5 = m[1], m[2], m[3], m[4], m[5]
 	local out
@@ -116,9 +142,34 @@ function bench_strcat3(n)
 		table.insert(buf, "</table>\n")
 		out = table.concat(buf);
 	end
-	verify(out)
+	if debug then verify(buf) end
 end
-bm:task(title, bench_strcat3)
+bm:task(title, bench_strcat4)
+
+
+title = "table.insert() only (no concat)"
+function bench_strcat5(n)
+	local m = members
+	local s1, s2, s3, s4, s5 = m[1], m[2], m[3], m[4], m[5]
+	local out
+	for i = 1, n do
+		buf = {}
+		table.insert(buf, "<table>\n")
+		for j = 1, 20 do
+			table.insert(buf, "  <tr>\
+    <td>"); table.insert(buf, s1); table.insert(buf, "</td>\
+    <td>"); table.insert(buf, s2); table.insert(buf, "</td>\
+    <td>"); table.insert(buf, s3); table.insert(buf, "</td>\
+    <td>"); table.insert(buf, s4); table.insert(buf, "</td>\
+    <td>"); table.insert(buf, s5); table.insert(buf, "</td>\
+  </tr>\n");
+		end
+		table.insert(buf, "</table>\n")
+		--out = table.concat(buf);
+	end
+	--if debug then verify(buf) end
+end
+bm:task(title, bench_strcat5)
 
 
 
