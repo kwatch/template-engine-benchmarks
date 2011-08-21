@@ -126,4 +126,24 @@ Benchmarker.new(:cycle=>cycle) do |bm|
   end
   verify(out)
 
+  bm.task "Array#push only (no join)" do
+    s1, s2, s3, s4, s5 = members
+    for i in 1..loop
+      buf = []
+      buf.push("<table>\n")
+      for j in 1..20
+        buf.push("  <tr>
+    <td>", s1, "</td>
+    <td>", s2, "</td>
+    <td>", s3, "</td>
+    <td>", s4, "</td>
+    <td>", s5, "</td>
+  </tr>\n")
+      end
+      buf.push("</table>\n")
+      #out = buf.join()
+    end
+  end
+  #verify(out)
+
 end
