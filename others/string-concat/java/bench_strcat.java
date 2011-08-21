@@ -293,6 +293,31 @@ public class bench_strcat {
                 }
             });
         //
+        bm.task(new Benchmarker.Task("ArrayList(256).add() (no join)") {
+                public void run(int loop) {
+                    String[] m = members();
+                    String s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
+                    String out = null;
+                    while (--loop >= 0) {
+                        ArrayList<String> buf = new ArrayList<String>(256);
+                        buf.add("<table>\n");
+                        for (int j = 0; j < 20; j++) {
+                            buf.add("  <tr>\n" +
+                            "    <td>"); buf.add(s1); buf.add("</td>\n" +
+                            "    <td>"); buf.add(s2); buf.add("</td>\n" +
+                            "    <td>"); buf.add(s3); buf.add("</td>\n" +
+                            "    <td>"); buf.add(s4); buf.add("</td>\n" +
+                            "    <td>"); buf.add(s5); buf.add("</td>\n" +
+                            "  </tr>\n");
+                            // pass
+                        }
+                        buf.add("</table>\n");
+                        //out = buf.toString();
+                    }
+                    //verify(out);
+                }
+            });
+         //
         bm.task(new Benchmarker.Task("StringArray().toString()") {
                 public void run(int loop) {
                     String[] m = members();
@@ -340,6 +365,33 @@ public class bench_strcat {
                         buf.add("</table>\n");
                         //out = buf.toString();
                         chars = buf.toChars();
+                    }
+                    //verify(out);
+                }
+            });
+        //
+        bm.task(new Benchmarker.Task("StringArray() (no join)") {
+                public void run(int loop) {
+                    String[] m = members();
+                    String s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
+                    //String out = null;
+                    char[] chars = null;
+                    while (--loop >= 0) {
+                        StringArray buf = new StringArray();
+                        buf.add("<table>\n");
+                        for (int j = 0; j < 20; j++) {
+                            buf.add("  <tr>\n" +
+                            "    <td>"); buf.add(s1); buf.add("</td>\n" +
+                            "    <td>"); buf.add(s2); buf.add("</td>\n" +
+                            "    <td>"); buf.add(s3); buf.add("</td>\n" +
+                            "    <td>"); buf.add(s4); buf.add("</td>\n" +
+                            "    <td>"); buf.add(s5); buf.add("</td>\n" +
+                            "  </tr>\n");
+                            // pass
+                        }
+                        buf.add("</table>\n");
+                        //out = buf.toString();
+                        //chars = buf.toChars();
                     }
                     //verify(out);
                 }
