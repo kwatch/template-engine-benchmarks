@@ -28,6 +28,12 @@ def all(c, *args, **kwargs):
                 system_f(c%"make N=$(loop) C=$(cycle) CMD=$(bin) 2>&1 | tee $(ldir)/$(bin).log")
 
 
+kookbook.load('@kook/books/clean.py')
+#CLEAN.append('**/*.{pyc,exe,class,rbc,__pycache__}')
+CLEAN.extend(('**/*.pyc', '**/*.exe', '**/*.class', '**/*.rbc', '**/__pycache__'))
+
+
+
 data = r"""
 node.js (0.5.4):        0.467           # 0.067
 g++ (4.2.1):            0.778
