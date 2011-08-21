@@ -73,6 +73,29 @@ $bm->task('push(@arr,$str);join(@arr)', sub {
 });
 
 
+$bm->task('push(@arr,$str) only (no join)', sub {
+    my ($loop, ) = @_;
+    my $out;
+    for my $i (1..$loop) {
+        my @buf = ();
+        push @buf, "<table>\n";
+        for my $j (1..20) {
+            push @buf, "  <tr>
+    <td>", $s1, "</td>
+    <td>", $s2, "</td>
+    <td>", $s3, "</td>
+    <td>", $s4, "</td>
+    <td>", $s5, "</td>
+  </tr>\n";
+        }
+        push @buf, "</table>\n";
+        #$out = join "", @buf;
+    }
+    #print "*** \$out=$out\n" if $debug;
+    #verify($out) if $debug;
+});
+
+
 $bm->task('$str.$str.$str', sub {
     my ($loop, ) = @_;
     my $out;
