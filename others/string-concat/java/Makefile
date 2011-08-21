@@ -1,4 +1,5 @@
 N = 100000
+C = 3
 
 .SUFFIXES: .java .class
 
@@ -8,7 +9,7 @@ base = bench_strcat
 	javac $<
 
 bench:	$(base).class
-	N=$(N) java -server $(base)
+	N=$(N) C=$(C) java -server $(base)
 
 clean:
 	rm -f *.class
