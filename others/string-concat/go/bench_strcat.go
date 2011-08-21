@@ -239,8 +239,9 @@ func main() {
     n, err := strconv.Atoi(os.Getenv("N"))
     if err != nil {
       os.Stderr.WriteString("*** can't convert N\n")
+    } else {
+      loop = n
     }
-    loop = n
   }
   fmt.Printf("*** loop=%d\n", loop)
   cycle := 3
@@ -248,8 +249,9 @@ func main() {
     c, err := strconv.Atoi(os.Getenv("C"))
     if err != nil {
       os.Stderr.WriteString("*** can't convert C\n")
+    } else {
+      cycle = c
     }
-    cycle = c
   }
   for i := 1; i <= cycle; i++ {
     fmt.Printf("\n")
@@ -257,10 +259,10 @@ func main() {
     empty_time := 0.0
     empty_time = run(loop, empty_time, task_empty, `(Empty)`)
     run(loop, empty_time, task_strcat1, `str+=s1+s2+s3`)
-    //run(loop, empty_time, task_strcat2, `str+=s1;str+=s2;str+=s3;`)
+    //run(loop, empty_time, task_strcat2, `str+=s1;str+=s2;str+=s3;`)  // too slow
     run(loop, empty_time, task_append1, `append(a,s1,s2,s3);strings.Join(a)`)
     run(loop, empty_time, task_append2, `append(a,s1+s2+s3);strings.Join(a)`)
-    //run(loop, empty_time, task_append3, `append(a,fmt.Sprintf(s1,s2,s3))`)
+    //run(loop, empty_time, task_append3, `append(a,fmt.Sprintf(s1,s2,s3))`) // slow
     run(loop, empty_time, task_bufstr1, `bytes.NewBufferString().Write(s);Write(s)`)
     run(loop, empty_time, task_bufstr2, `bytes.NewBufferString().Write(s+s+s)`)
   }
