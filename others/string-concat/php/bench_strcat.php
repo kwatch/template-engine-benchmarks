@@ -84,8 +84,32 @@ function task_strcat2($n) {
 $bm->task($title, 'task_strcat2');
 
 
-$title = 'ob_start();echo()';
+$title = '$arr[]=$str only (no join)';
 function task_strcat3($n) {
+    global $members;
+    list($s1, $s2, $s3, $s4, $s5) = $members;
+    while (--$n >= 0) {
+        $buf = array();
+        $buf[] = "<table>\n";
+        for ($j = 0; $j < 20; $j++) {
+            $buf[] = "  <tr>
+    <td>"; $buf[] = $s1; $buf[] = "</td>
+    <td>"; $buf[] = $s2; $buf[] = "</td>
+    <td>"; $buf[] = $s3; $buf[] = "</td>
+    <td>"; $buf[] = $s4; $buf[] = "</td>
+    <td>"; $buf[] = $s5; $buf[] = "</td>
+  </tr>\n";
+        }
+        $buf[] = "</table>\n";
+        //$out = implode($buf);
+    }
+    //verify($out);
+}
+$bm->task($title, 'task_strcat3');
+
+
+$title = 'ob_start();echo()';
+function task_strcat4($n) {
     global $members;
     list($s1, $s2, $s3, $s4, $s5) = $members;
     while (--$n >= 0) {
@@ -105,7 +129,7 @@ function task_strcat3($n) {
     }
     verify($out);
 }
-$bm->task($title, 'task_strcat3');
+$bm->task($title, 'task_strcat4');
 
 
 $bm->run();
