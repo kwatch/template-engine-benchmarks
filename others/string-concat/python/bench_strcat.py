@@ -116,6 +116,23 @@ for bm in Benchmarker(cycle=cycle):
     verify(out)
 
 
+    with bm("extend() only (no join)"):
+        for i in xrange(loop):
+            buf = []; extend = buf.extend
+            extend(('''<table>\n''',))
+            for j in xrange(20):
+                extend(('''  <tr>
+    <td>''', s1, '''</td>
+    <td>''', s2, '''</td>
+    <td>''', s3, '''</td>
+    <td>''', s4, '''</td>
+    <td>''', s5, '''</td>
+  </tr>\n''',))
+            extend(('''</table>\n''',))
+            #out = "".join(buf)
+    #verify(out)
+
+
     with bm("extend()+str()"):
         for i in xrange(loop):
             buf = []; extend = buf.extend
