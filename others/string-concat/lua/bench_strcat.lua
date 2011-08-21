@@ -35,8 +35,9 @@ bm = benchmarker.Benchmarker.new(loop)
 
 
 function bench_empty(n)
-	local m = members;
+	local m = members
 	local s1, s2, s3, s4, s5 = m[1], m[2], m[3], m[4], m[5]
+	local out
 	for i = 1, n do
 		for j = 1, 20 do
 			-- pass
@@ -48,8 +49,9 @@ bm:empty_task(bench_empty)
 
 title = "str..str..str"
 function bench_strcat1(n)
-	local m = members;
+	local m = members
 	local s1, s2, s3, s4, s5 = m[1], m[2], m[3], m[4], m[5]
+	local out
 	for i = 1, n do
 		buf = ""
 		buf = buf .. "<table>\n"
@@ -71,8 +73,9 @@ bm:task(title, bench_strcat1)
 
 title = "buf[#buf+1]=str;table.concat()"
 function bench_strcat2(n)
-	local m = members;
+	local m = members
 	local s1, s2, s3, s4, s5 = m[1], m[2], m[3], m[4], m[5]
+	local out
 	for i = 1, n do
 		buf = {}
 		buf[#buf+1] = "<table>\n"
@@ -95,8 +98,9 @@ bm:task(title, bench_strcat2)
 
 title = "table.insert();table.concat()"
 function bench_strcat3(n)
-	local m = members;
+	local m = members
 	local s1, s2, s3, s4, s5 = m[1], m[2], m[3], m[4], m[5]
+	local out
 	for i = 1, n do
 		buf = {}
 		table.insert(buf, "<table>\n")
