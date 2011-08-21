@@ -43,7 +43,10 @@ public class bench_strcat {
         }
     }
 
+    static boolean __debug = false;
+
     static void verify(String out) {
+        if (! __debug) return;
         if (out == null) {
             throw new RuntimeException("out != null: failed.");
         }
@@ -62,6 +65,8 @@ public class bench_strcat {
         if (s != null) loop = Integer.parseInt(s);
         s = System.getenv("C");
         if (s != null) cycle = Integer.parseInt(s);
+        s = System.getenv("D");
+        if (s != null) __debug = true;
         Benchmarker bm = new Benchmarker(loop, cycle);
         //
         bm.emptyTask(new Benchmarker.Task() {
