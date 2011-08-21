@@ -169,6 +169,32 @@ func task_append3(loop int) string {
 }
 
 
+func task_append4(loop int) string {
+  m := members()
+  s1 := m[0]; s2 := m[1]; s3 := m[2]; s4 := m[3]; s5 := m[4];
+  //out := ""
+  for i := 0; i < loop; i++ {
+    buf := []string{}
+    buf = append(buf, `<table>
+`); for j := 0; j < 20; j++ {
+      buf = append(buf, `  <tr>
+    <td>` + s1 + `</td>
+    <td>` + s2 + `</td>
+    <td>` + s3 + `</td>
+    <td>` + s4 + `</td>
+    <td>` + s5 + `</td>
+  </tr>
+`); }
+    buf = append(buf, `</table>
+`);
+    //out = strings.Join(buf, "")
+  }
+  //verify(out)
+  //return out
+  return ""
+}
+
+
 func task_bufstr1(loop int) string {
   m := members()
   s1 := m[0]; s2 := m[1]; s3 := m[2]; s4 := m[3]; s5 := m[4];
@@ -263,6 +289,7 @@ func main() {
     run(loop, empty_time, task_append1, `append(a,s1,s2,s3);strings.Join(a)`)
     run(loop, empty_time, task_append2, `append(a,s1+s2+s3);strings.Join(a)`)
     //run(loop, empty_time, task_append3, `append(a,fmt.Sprintf(s1,s2,s3))`) // slow
+    run(loop, empty_time, task_append4, `append(a,s1+s2+s3) only (no Join)`)
     run(loop, empty_time, task_bufstr1, `bytes.NewBufferString().Write(s);Write(s)`)
     run(loop, empty_time, task_bufstr2, `bytes.NewBufferString().Write(s+s+s)`)
   }
