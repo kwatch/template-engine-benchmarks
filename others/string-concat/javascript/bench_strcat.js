@@ -94,6 +94,30 @@ bm.task("arr.push(s,s,s) only (no join)", function(loop) {
 });
 
 
+bm.task("arr.push(s,s,s);arr.join('') w. Buffer", function(loop) {
+  var m = members();
+  var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
+  var out = "";
+  while (--loop >= 0) {
+    var buf = [];
+    buf.push("<table>\n");
+    for (var j = 0; j < 20; j++) {
+      buf.push("  <tr>\n\
+    <td>", s1, "</td>\n\
+    <td>", s2, "</td>\n\
+    <td>", s3, "</td>\n\
+    <td>", s4, "</td>\n\
+    <td>", s5, "</td>\n\
+  </tr>\n");
+    }
+    buf.push("</table>\n");
+    out = buf.join("");
+    new Buffer(out, 'utf8');    // !!!
+  }
+  verify(out);
+});
+
+
 bm.task("arr[i++]=s;arr.join('')", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
@@ -181,7 +205,7 @@ bm.task("buf+=s;buf+=s;buf+=s", function(loop) {
     }
     buf += "</table>\n";
     out = buf;
-    //verify(out);
+    verify(out);
   }
   verify(out);
 });
@@ -230,6 +254,31 @@ bm.task("buf+=s+s+s", function(loop) {
     buf += "</table>\n";
     out = buf;
     verify(out);
+  }
+  verify(out);
+});
+
+
+bm.task("buf+=s+s+s w. Buffer", function(loop) {
+  var m = members();
+  var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
+  var out = "";
+  while (--loop >= 0) {
+    var buf = "";
+    buf += "<table>\n";
+    for (var j = 0; j < 20; j++) {
+      buf += "  <tr>\n\
+    <td>" + s1 + "</td>\n\
+    <td>" + s2 + "</td>\n\
+    <td>" + s3 + "</td>\n\
+    <td>" + s4 + "</td>\n\
+    <td>" + s5 + "</td>\n\
+  </tr>\n";
+    }
+    buf += "</table>\n";
+    out = buf;
+    verify(out);
+    new Buffer(out, 'utf8');    // !!!
   }
   verify(out);
 });
