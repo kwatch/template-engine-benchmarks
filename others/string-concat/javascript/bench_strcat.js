@@ -50,7 +50,7 @@ bm.emptyTask(function(loop) {
 });
 
 
-bm.task("arr.push(s,s,s);arr.join('')", function(loop) {
+bm.task("a.push(s,s,s);a.join", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -73,7 +73,7 @@ bm.task("arr.push(s,s,s);arr.join('')", function(loop) {
 });
 
 
-bm.task("arr.push(s,s,s) only (no join)", function(loop) {
+bm.task("a.push(s,s,s) only (no join)", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -96,7 +96,7 @@ bm.task("arr.push(s,s,s) only (no join)", function(loop) {
 });
 
 
-bm.task("arr.push(s,s,s);arr.join('') w. Buffer", function(loop) {
+bm.task("a.push(s,s,s);a.join (w. Buffer)", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -120,7 +120,7 @@ bm.task("arr.push(s,s,s);arr.join('') w. Buffer", function(loop) {
 });
 
 
-bm.task("arr.push(s,s,s);arr.join('') w. /dev/null", function(loop) {
+bm.task("a.push(s,s,s);a.join (w. /dev/null)", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -144,7 +144,7 @@ bm.task("arr.push(s,s,s);arr.join('') w. /dev/null", function(loop) {
 });
 
 
-bm.task("arr[i++]=s;arr.join('')", function(loop) {
+bm.task("a[i++]=s;a.join", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -167,7 +167,7 @@ bm.task("arr[i++]=s;arr.join('')", function(loop) {
 });
 
 
-bm.task("arr[++i]=s;arr.join('')", function(loop) {
+bm.task("a[++i]=s;a.join", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -190,7 +190,7 @@ bm.task("arr[++i]=s;arr.join('')", function(loop) {
 });
 
 
-bm.task("a[a.length]=s;a.join('')", function(loop) {
+bm.task("a[a.length]=s;a.join", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -285,7 +285,7 @@ bm.task("buf+=s+s+s", function(loop) {
 });
 
 
-bm.task("buf+=s+s+s w. Buffer", function(loop) {
+bm.task("buf+=s+s+s (w. Buffer)", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -310,7 +310,7 @@ bm.task("buf+=s+s+s w. Buffer", function(loop) {
 });
 
 
-bm.task("buf+=s+s+s w. /dev/null", function(loop) {
+bm.task("buf+=s+s+s (w. /dev/null)", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
