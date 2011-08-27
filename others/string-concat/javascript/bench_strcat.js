@@ -120,7 +120,7 @@ bm.task("a.push(s,s,s);a.join (w. Buffer)", function(loop) {
 });
 
 
-bm.task("a.push(s,s,s);a.join (w. /dev/null)", function(loop) {
+bm.task("a.push(s,s,s);a.join (w. /dev/null sync)", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -139,6 +139,34 @@ bm.task("a.push(s,s,s);a.join (w. /dev/null)", function(loop) {
     buf.push("</table>\n");
     out = buf.join("");
     fs.writeSync(fd_dev_null, out);    // !!!
+  }
+  verify(out);
+});
+
+
+bm.task("a.push(s,s,s);a.join (w. /dev/null async)", function(loop) {
+  var m = members();
+  var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
+  var out = "";
+  while (--loop >= 0) {
+    var buf = [];
+    buf.push("<table>\n");
+    for (var j = 0; j < 20; j++) {
+      buf.push("  <tr>\n\
+    <td>", s1, "</td>\n\
+    <td>", s2, "</td>\n\
+    <td>", s3, "</td>\n\
+    <td>", s4, "</td>\n\
+    <td>", s5, "</td>\n\
+  </tr>\n");
+    }
+    buf.push("</table>\n");
+    out = buf.join("");
+    fs.write(fd_dev_null, new Buffer(out), 0, out.length, 0,
+             function(err, written, buffer) { if (err) throw err; });
+    //fs.writeFile("/dev/null", out, 'utf8',
+    //             function(err) { if (err) throw err; });
+         //=> Error: EMFILE, Too many open files '/dev/null'
   }
   verify(out);
 });
@@ -310,7 +338,7 @@ bm.task("buf+=s+s+s (w. Buffer)", function(loop) {
 });
 
 
-bm.task("buf+=s+s+s (w. /dev/null)", function(loop) {
+bm.task("buf+=s+s+s (w. /dev/null sync)", function(loop) {
   var m = members();
   var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
   var out = "";
@@ -330,6 +358,35 @@ bm.task("buf+=s+s+s (w. /dev/null)", function(loop) {
     out = buf;
     verify(out);
     fs.writeSync(fd_dev_null, out, 0);    // !!!
+  }
+  verify(out);
+});
+
+
+bm.task("buf+=s+s+s (w. /dev/null async)", function(loop) {
+  var m = members();
+  var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
+  var out = "";
+  while (--loop >= 0) {
+    var buf = "";
+    buf += "<table>\n";
+    for (var j = 0; j < 20; j++) {
+      buf += "  <tr>\n\
+    <td>" + s1 + "</td>\n\
+    <td>" + s2 + "</td>\n\
+    <td>" + s3 + "</td>\n\
+    <td>" + s4 + "</td>\n\
+    <td>" + s5 + "</td>\n\
+  </tr>\n";
+    }
+    buf += "</table>\n";
+    out = buf;
+    verify(out);
+    fs.write(fd_dev_null, new Buffer(out), 0, out.length, 0,
+             function(err, written, buffer) { if (err) throw err; });
+    //fs.writeFile("/dev/null", out, 'utf8',
+    //             function(err) { if (err) throw err; });
+         //=> Error: EMFILE, Too many open files '/dev/null'
   }
   verify(out);
 });
