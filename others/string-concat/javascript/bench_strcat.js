@@ -9,6 +9,8 @@
 var assert = require("assert");
 var fs = require("fs");
 
+var fd_dev_null = fs.openSync('/dev/null', 'w');
+
 var Benchmarker = require('./benchmarker').Benchmarker;
 
 function members() {
@@ -34,7 +36,7 @@ var cycle = 3;
 if (process.env.C) cycle = + process.env.C;
 
 var bm = new Benchmarker(loop, cycle);
-bm.width = 40;
+bm.width = 45;
 
 
 bm.emptyTask(function(loop) {
@@ -113,6 +115,30 @@ bm.task("arr.push(s,s,s);arr.join('') w. Buffer", function(loop) {
     buf.push("</table>\n");
     out = buf.join("");
     new Buffer(out, 'utf8');    // !!!
+  }
+  verify(out);
+});
+
+
+bm.task("arr.push(s,s,s);arr.join('') w. /dev/null", function(loop) {
+  var m = members();
+  var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
+  var out = "";
+  while (--loop >= 0) {
+    var buf = [];
+    buf.push("<table>\n");
+    for (var j = 0; j < 20; j++) {
+      buf.push("  <tr>\n\
+    <td>", s1, "</td>\n\
+    <td>", s2, "</td>\n\
+    <td>", s3, "</td>\n\
+    <td>", s4, "</td>\n\
+    <td>", s5, "</td>\n\
+  </tr>\n");
+    }
+    buf.push("</table>\n");
+    out = buf.join("");
+    fs.writeSync(fd_dev_null, out);    // !!!
   }
   verify(out);
 });
@@ -279,6 +305,31 @@ bm.task("buf+=s+s+s w. Buffer", function(loop) {
     out = buf;
     verify(out);
     new Buffer(out, 'utf8');    // !!!
+  }
+  verify(out);
+});
+
+
+bm.task("buf+=s+s+s w. /dev/null", function(loop) {
+  var m = members();
+  var s1 = m[0], s2 = m[1], s3 = m[2], s4 = m[3], s5 = m[4];
+  var out = "";
+  while (--loop >= 0) {
+    var buf = "";
+    buf += "<table>\n";
+    for (var j = 0; j < 20; j++) {
+      buf += "  <tr>\n\
+    <td>" + s1 + "</td>\n\
+    <td>" + s2 + "</td>\n\
+    <td>" + s3 + "</td>\n\
+    <td>" + s4 + "</td>\n\
+    <td>" + s5 + "</td>\n\
+  </tr>\n";
+    }
+    buf += "</table>\n";
+    out = buf;
+    verify(out);
+    fs.writeSync(fd_dev_null, out, 0);    // !!!
   }
   verify(out);
 });
