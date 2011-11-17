@@ -19,11 +19,23 @@
     <pathelement location="${lib}/velocity-1.5.jar" />
     <pathelement location="${lib}/velocity-dep-1.5.jar" />
     -->
+    <pathelement location="${lib}/jamon-anttask-2.4.0.jar" />
+    <pathelement location="${lib}/jamon-api-2.3.0.jar" />
+    <pathelement location="${lib}/jamon-processor-2.4.0.jar" />
+    <pathelement location="${lib}/jamon-runtime-2.4.0.jar" />
+    <pathelement location="${lib}/jamon-stdlib-2.4.0.jar" />
+    <pathelement location="${lib}/japid-0.9.2.jar" />
+    <pathelement location="${lib}/javaparser-1.0.8.jar" />
+    <pathelement location="${lib}/org.eclipse.jdt.core-3.6.0.jar" />
   </path>
 
   <target name="init">
     <tstamp/>
     <mkdir dir="${classes}" />
+    <taskdef name="jamon"
+             classname="org.jamon.ant.JamonTask"
+             classpathref="project.class.path"/>
+    <jamon destdir="${src}" srcdir="templates" />
   </target>
 
   <target name="compile" depends="init">
@@ -57,18 +69,32 @@
   </target>
 
   <target name="stringbuilder" depends="compile">
-    <java classname="StocksStringBuilderBench" output="output.stringbuilder" logError="true" fork="true">
+    <java classname="teb.StocksStringBuilderBench" output="output.stringbuilder" logError="true" fork="true">
       <classpath location="classes" />
     </java>
   </target>
 
   <target name="kwartzite" depends="compile">
-    <java classname="StocksKwartziteBench" output="output.kwartzite" logError="true" fork="true">
+    <java classname="teb.StocksKwartziteBench" output="output.kwartzite" logError="true" fork="true">
       <classpath location="classes" />
     </java>
   </target>
 
-  <target name="benchmarks" depends="velocity17,velocity16,velocity15,stringbuilder,kwartzite">
+  <target name="jamon" depends="compile">
+    <java classname="teb.StocksJamonBench" output="output.jamon" logError="true" fork="true">
+      <classpath location="classes" />
+      <classpath refid="project.class.path" />
+    </java>
+  </target>
+
+  <target name="japid" depends="compile">
+    <java classname="teb.StocksJapidBench" output="output.japid" logError="true" fork="true">
+      <classpath location="classes" />
+      <classpath refid="project.class.path" />
+    </java>
+  </target>
+
+  <target name="benchmarks" depends="velocity17,japid,velocity16,velocity15,stringbuilder,kwartzite,jamon">
   </target>
 
   <target name="clean">
