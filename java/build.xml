@@ -27,6 +27,9 @@
     <pathelement location="${lib}/japid-0.9.2.jar" />
     <pathelement location="${lib}/javaparser-1.0.8.jar" />
     <pathelement location="${lib}/org.eclipse.jdt.core-3.6.0.jar" />
+    <pathelement location="${lib}/patbinfree153.jar" />
+    <pathelement location="${lib}/ecj-3.7.1.jar" />
+    <pathelement location="${lib}/rythm-0.1.jar" />
   </path>
 
   <target name="init">
@@ -36,6 +39,10 @@
              classname="org.jamon.ant.JamonTask"
              classpathref="project.class.path"/>
     <jamon destdir="${src}" srcdir="templates" />
+    <taskdef name="rythm"
+             classname="com.greenlaw110.rythm.RythmCompileTask"
+             classpathref="project.class.path"/>
+    <rythm destdir="${src}" srcdir="templates" />
   </target>
 
   <target name="compile" depends="init">
@@ -93,8 +100,15 @@
       <classpath refid="project.class.path" />
     </java>
   </target>
+  
+  <target name="rythm" depends="compile">
+    <java classname="teb.StocksRythmBench" output="output.rythm" logError="true" fork="true">
+      <classpath location="classes" />
+      <classpath refid="project.class.path" />
+    </java>
+  </target>
 
-  <target name="benchmarks" depends="velocity17,japid,velocity16,velocity15,stringbuilder,kwartzite,jamon">
+  <target name="benchmarks" depends="velocity17,velocity16,velocity15,stringbuilder,kwartzite,jamon,rythm,japid">
   </target>
 
   <target name="clean">

@@ -19,7 +19,8 @@ public class StocksJapidBench extends Bench {
         JapidRenderer.init(OpMode.prod, "templates", 10000);
         while (--ntimes >= 0) {
             /// create context data
-            output = JapidRenderer.renderWith("stocks.html", items);
+            output = JapidRenderer.renderWith("stocks2.html", items, "green");
+            //output = new japidviews.stocks(new StringBuilder(10000)).render(items);
         }
         return output;
     }
