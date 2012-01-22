@@ -39,10 +39,6 @@
              classname="org.jamon.ant.JamonTask"
              classpathref="project.class.path"/>
     <jamon destdir="${src}" srcdir="templates" />
-    <taskdef name="rythm"
-             classname="com.greenlaw110.rythm.RythmCompileTask"
-             classpathref="project.class.path"/>
-    <rythm destdir="${src}" srcdir="templates" />
   </target>
 
   <target name="compile" depends="init">
@@ -52,7 +48,7 @@
   </target>
 
   <target name="velocity17" depends="compile">
-    <java classname="StocksVelocityBench" output="output.velocity17" logError="true" fork="true">
+    <java classname="teb.StocksVelocityBench" output="output.velocity17" logError="true" fork="true">
       <classpath location="classes" />
       <classpath location="${lib}/velocity-1.7.jar" />
       <classpath location="${lib}/velocity-1.7-dep.jar" />
@@ -60,7 +56,7 @@
   </target>
 
   <target name="velocity16" depends="compile">
-    <java classname="StocksVelocityBench" output="output.velocity16" logError="true" fork="true">
+    <java classname="teb.StocksVelocityBench" output="output.velocity16" logError="true" fork="true">
       <classpath location="classes" />
       <classpath location="${lib}/velocity-1.6.4.jar" />
       <classpath location="${lib}/velocity-1.6.4-dep.jar" />
@@ -68,7 +64,7 @@
   </target>
 
   <target name="velocity15" depends="compile">
-    <java classname="StocksVelocityBench" output="output.velocity15" logError="true" fork="true">
+    <java classname="teb.StocksVelocityBench" output="output.velocity15" logError="true" fork="true">
       <classpath location="classes" />
       <classpath location="${lib}/velocity-1.5.jar" />
       <classpath location="${lib}/velocity-dep-1.5.jar" />

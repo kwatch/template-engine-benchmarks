@@ -8,8 +8,8 @@ import java.io.*;
 import java.util.*;
 
 import com.greenlaw110.rythm.*;
-import com.greenlaw110.rythm.compiler.*;
 import com.greenlaw110.rythm.template.*;
+import com.greenlaw110.rythm.internal.compiler.*;
 
 
 public class StocksRythmBench extends Bench {
@@ -17,15 +17,19 @@ public class StocksRythmBench extends Bench {
     @Override
     public String execute(int ntimes, List<Stock> items) throws Exception {
         String output = null;
-        TemplateProcessor tp = new TemplateProcessor(new File("src"), new File("templates"));
         while (--ntimes >= 0) {
             /// create context data
-            Map<String, Object> args = new HashMap<String, Object>();
-            args.put("items", items);
+            //Map<String, Object> args = new HashMap<String, Object>();
+            //args.put("items", items);
             
-            ITemplate t = tp.process("stocks.rythm.html");
-            t.setRenderArgs(args);
-            output = t.render();
+            //ITemplate t = tp.process("rythm/stocks.rythm.html");
+            //t.setRenderArgs(items);
+            output = Rythm.render("templates/rythm/stocks.rythm.html", items);
+            
+            //ITemplate tmpl = tmpl();
+            //tmpl.setRenderArgs(items);
+            //output = tmpl.render();
+
         }
         return output;
     }
