@@ -13,10 +13,16 @@ import com.greenlaw110.rythm.internal.compiler.*;
 
 
 public class StocksRythmBench extends Bench {
+    RythmEngine engine = new RythmEngine();
+
+    public StocksRythmBench() {
+        engine.mode = Rythm.Mode.prod;
+    }
 
     @Override
     public String execute(int ntimes, List<Stock> items) throws Exception {
         String output = null;
+
         while (--ntimes >= 0) {
             /// create context data
             //Map<String, Object> args = new HashMap<String, Object>();
@@ -24,7 +30,7 @@ public class StocksRythmBench extends Bench {
             
             //ITemplate t = tp.process("rythm/stocks.rythm.html");
             //t.setRenderArgs(items);
-            output = Rythm.render("templates/rythm/stocks.rythm.html", items);
+            output = engine.render("templates/rythm/stocks.rythm.html", items);
             
             //ITemplate tmpl = tmpl();
             //tmpl.setRenderArgs(items);

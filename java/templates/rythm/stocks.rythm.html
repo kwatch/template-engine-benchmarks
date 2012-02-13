@@ -53,11 +53,12 @@ thead {
     </tr>
    </thead>
    <tbody>
-@each Stock item: items
-    <tr class="${_isOdd ? "odd" : "even"}">
-     <td style="text-align: center">@items.size()</td>
+@each(Stock item: items) {
+    <tr class="@item_parity">
+    @{String symbo = item.getSymbol(); double change = item.getChange();}@
+     <td style="text-align: center">@item_index</td>
      <td>
-      <a href="/stocks/@item.getSymbol()">@item.getSymbol()</a>
+      <a href="/stocks/@symbo">@symbo</a>
      </td>
      <td>
       <a href="@item.getUrl()">@item.getName()</a>
@@ -65,15 +66,15 @@ thead {
      <td>
       <strong>@item.getPrice()</strong>
      </td>
-     @if (item.getChange() < 0.0) 
-     <td class="minus">@item.getChange()</td>
+     @if (change < 0.0) {
+     <td class="minus">@change</td>
      <td class="minus">@item.getRatio()</td>
-     @ else 
-     <td>@item.getChange()</td>
+     } else {
+     <td>@change</td>
      <td>@item.getRatio()</td>
-     @
+     }
     </tr>
-@
+}
    </tbody>
   </table>
 

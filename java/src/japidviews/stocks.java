@@ -150,7 +150,8 @@ public void render(final Stock item, final int _size, final int _index, final bo
 		p("</td>\n" + 
 "     ");// line 73
 		}// line 74
-		p("    </tr>");// line 74
+		p("    </tr>\n" + 
+"    ");// line 74
 		
 }
 
@@ -172,7 +173,7 @@ public void resetBuffer() {
 "  </table>\n" + 
 "\n" + 
 " </body>\n" + 
-"</html>\n");// line 75
+"</html>\n");// line 76
 		
 	}
 

@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.MalformedURLException;
-import com.sun.tools.javac.Main;
+//import com.sun.tools.javac.Main;
 import kwartzite.Template;
 import kwartzite.TemplateClassLoader;
 
@@ -56,8 +56,9 @@ public class TemplateClassLoaderImpl implements TemplateClassLoader {
     protected int compile(String filepath) {
         String classpath = _classpath + ":" + _classdir;
         String[] args = new String[] {"-classpath", classpath, "-d", _classdir, filepath};
-        int error_code = error_code = com.sun.tools.javac.Main.compile(args, _err);
-        return error_code;
+        //int error_code = error_code = com.sun.tools.javac.Main.compile(args, _err);
+        //return error_code;
+        return 0;
     }
 
     protected void compileFiles(String filepath) {
