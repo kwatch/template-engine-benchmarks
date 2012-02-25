@@ -49,7 +49,6 @@ abstract public class Bench implements Runnable {
             /// report result
             System.err.println("ntimes: " + ntimes + ", real time: " + (end_t - start_t) + "(msec)");
             System.out.print(output);
-            System.err.println(new java.io.File("rythm/stocks.rythm.html").getAbsolutePath());
         }
         catch (Exception ex) {
             ex.printStackTrace();
