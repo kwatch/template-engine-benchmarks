@@ -53,7 +53,8 @@ thead {
     </tr>
    </thead>
    <tbody>
-@each(Stock item: items) {
+@raw() {
+@for(Stock item: items) {
     <tr class="@item_parity">
     @{String symbo = item.getSymbol(); double change = item.getChange();}@
      <td style="text-align: center">@item_index</td>
@@ -74,6 +75,7 @@ thead {
      <td>@item.getRatio()</td>
      }
     </tr>
+}
 }
    </tbody>
   </table>
