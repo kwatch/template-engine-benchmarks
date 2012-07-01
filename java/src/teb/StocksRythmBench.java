@@ -23,7 +23,6 @@ public class StocksRythmBench extends Bench {
         while (--ntimes >= 0) {
             output = engine.render("templates/rythm/stocks.rythm.html", items);
         }
-		engine.shutdown();
         return output;
     }
 
