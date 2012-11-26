@@ -14,15 +14,28 @@ import com.greenlaw110.rythm.internal.compiler.*;
 
 public class StocksRythmBench extends Bench {
 
-    RythmEngine engine = new RythmEngine();
+    RythmEngine engine;
+    
+    public StocksRythmBench() {
+        Properties p = new Properties();
+        p.put("rythm.cache.enabled", false);
+        engine = new RythmEngine(p);
+    }
+    
+    protected void shutdown() {
+        engine.shutdown();
+    }
 
     @Override
     public String execute(int ntimes, List<Stock> items) throws Exception {
         String output = null;
+        //engine.mode = Rythm.Mode.dev;
+        //System.err.println(engine.tmpDir);
 
         while (--ntimes >= 0) {
             output = engine.render("templates/rythm/stocks.rythm.html", items);
         }
+        
         return output;
     }
 

@@ -34,6 +34,8 @@ abstract public class Bench implements Runnable {
     }
 
     abstract public String execute(int ntimes, List<Stock> items) throws Exception;
+    
+    protected void shutdown() {}
 
     @Override
     public void run() {
@@ -49,6 +51,7 @@ abstract public class Bench implements Runnable {
             /// report result
             System.err.println("ntimes: " + ntimes + ", real time: " + (end_t - start_t) + "(msec)");
             System.out.print(output);
+            shutdown();
         }
         catch (Exception ex) {
             ex.printStackTrace();
