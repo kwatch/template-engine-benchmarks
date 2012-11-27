@@ -19,6 +19,7 @@ public class StocksRythmBench extends Bench {
     public StocksRythmBench() {
         Properties p = new Properties();
         p.put("rythm.cache.enabled", false);
+        //p.put("rythm.mode", "dev");
         engine = new RythmEngine(p);
     }
     
