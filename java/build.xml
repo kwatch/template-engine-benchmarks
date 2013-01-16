@@ -30,7 +30,7 @@
     <pathelement location="${lib}/patbinfree153.jar" />
     <pathelement location="${lib}/ecj-3.7.1.jar" />
     <pathelement location="${lib}/commons-lang3-3.1.jar" />
-    <pathelement location="${lib}/rythm-1.0.0-20121126.jar" />
+    <pathelement location="${lib}/rythm-1.0-SNAPSHOT.jar" />
   </path>
 
   <target name="init">
@@ -91,12 +91,14 @@
     </java>
   </target>
 
+   <!--
   <target name="japid" depends="compile">
     <java classname="teb.StocksJapidBench" output="output.japid" logError="true" fork="true">
       <classpath location="classes" />
       <classpath refid="project.class.path" />
     </java>
   </target>
+  -->
   
   <target name="rythm" depends="compile">
     <java classname="teb.StocksRythmBench" output="output.rythm" logError="true" fork="true">
@@ -105,7 +107,7 @@
     </java>
   </target>
 
-  <target name="benchmarks" depends="velocity17,velocity16,velocity15,stringbuilder,kwartzite,jamon,rythm,japid">
+  <target name="benchmarks" depends="velocity17,velocity16,velocity15,stringbuilder,kwartzite,jamon,rythm">
   </target>
 
   <target name="clean">
