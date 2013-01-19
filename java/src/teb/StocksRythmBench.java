@@ -11,6 +11,8 @@ import com.greenlaw110.rythm.*;
 import com.greenlaw110.rythm.template.*;
 import com.greenlaw110.rythm.internal.compiler.*;
 
+import java.util.logging.*;
+
 
 public class StocksRythmBench extends Bench {
 
@@ -19,6 +21,7 @@ public class StocksRythmBench extends Bench {
     public StocksRythmBench() {
         Properties p = new Properties();
         p.put("rythm.cache.enabled", false);
+        p.put("rythm.logger.disabled", true);
         //p.put("rythm.mode", "dev");
         engine = new RythmEngine(p);
     }
