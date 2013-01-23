@@ -1,6 +1,11 @@
-@__simple__
 @import teb.Stock
 @args java.util.List<Stock> items
+@*{
+    int rint = new Random().nextInt(100); 
+    boolean b = rint > 70;
+    while(b){b = true;}
+}*@
+@//{System.exit(1);}
 @//cache("1h", items) {
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -15,7 +20,7 @@
   <link rel="stylesheet" type="text/css" href="/css/style.css" media="all" />
   <script type="text/javascript" src="/js/util.js"></script>
   <style type="text/css">
-  /*<![CDATA[*/
+  <![CDATA[
 
 body {
     color: #333333;
@@ -39,7 +44,7 @@ thead {
     color: #FF0000;
 }
 
-  /*]]>*/
+  ]]>
   </style>
 
  </head>
@@ -56,15 +61,15 @@ thead {
    </thead>
    <tbody>
 @raw() {
-@for(Stock item: items) {
+@for(item: items) {
     <tr class="@item_parity">
-    @{String symbo = item.getSymbol(); double change = item.getChange();}@
+    @{String symbo = item.getSymbol(); double change = item.getChange();}
      <td style="text-align: center">@item_index</td>
      <td>
       <a href="/stocks/@symbo">@symbo</a>
      </td>
      <td>
-      <a href="@item.getUrl()">@item.getName()</a>
+      <a href="@item.getUrl()">@(item.getName())</a>
      </td>
      <td>
       <strong>@item.getPrice()</strong>

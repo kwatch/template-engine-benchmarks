@@ -17,13 +17,18 @@ import java.util.logging.*;
 public class StocksRythmBench extends Bench {
 
     RythmEngine engine;
+    private String template = "templates/rythm/stocks.rythm.html";
     
     public StocksRythmBench() {
         Properties p = new Properties();
         p.put("rythm.cache.enabled", false);
         p.put("rythm.logger.disabled", true);
+        p.put("rythm.tmpDir", "c:\\tmp");
         //p.put("rythm.mode", "dev");
-        engine = new RythmEngine(p);
+        engine = new RythmEngine(p);//.enterSandbox();
+        if (System.getProperty("rythm-fast") != null) {
+            template = "templates/rythm/stocks.rythm-fast.html";
+        }
     }
     
     protected void shutdown() {
@@ -33,11 +38,9 @@ public class StocksRythmBench extends Bench {
     @Override
     public String execute(int ntimes, List<Stock> items) throws Exception {
         String output = null;
-        //engine.mode = Rythm.Mode.dev;
-        //System.err.println(engine.tmpDir);
-
+        String tmpl = template;
         while (--ntimes >= 0) {
-            output = engine.render("templates/rythm/stocks.rythm.html", items);
+            output = engine.render(tmpl, items);
         }
         
         return output;

@@ -107,7 +107,15 @@
     </java>
   </target>
 
-  <target name="benchmarks" depends="velocity17,velocity16,velocity15,stringbuilder,kwartzite,jamon,rythm">
+  <target name="rythm-fast" depends="compile">
+    <java classname="teb.StocksRythmBench" output="output.rythm" logError="true" fork="true">
+      <classpath location="classes" />
+      <classpath refid="project.class.path" />
+      <sysproperty key="rythm-fast" value="true"/>
+    </java>
+  </target>
+
+  <target name="benchmarks" depends="velocity17,velocity16,velocity15,stringbuilder,rythm,rythm-fast,kwartzite,jamon">
   </target>
 
   <target name="clean">
