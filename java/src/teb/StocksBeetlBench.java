@@ -9,6 +9,7 @@ import java.util.*;
 
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
+import org.bee.tl.core.io.OutputStreamByteWriter;
 
 import java.util.logging.*;
 
@@ -23,6 +24,8 @@ public class StocksBeetlBench extends Bench {
         group.config("<!--:", "-->", "${", "}");
         group.setCharset("UTF-8");
         group.enableOptimize();
+        group.enableDirectOutputByte();
+        OutputStreamByteWriter.DEFAULT_BYTE_BUFFER_SIZE = 2048;
     }
     
     protected void shutdown() {
