@@ -17,7 +17,7 @@ import java.util.logging.*;
 public class StocksRythmBench extends Bench {
 
     RythmEngine engine;
-    private String template = "templates/rythm/stocks.rythm.html";
+    private String template = "templates/stocks.rythm.html";
     
     public StocksRythmBench() {
         Properties p = new Properties();

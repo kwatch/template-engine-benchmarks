@@ -17,7 +17,7 @@ import java.util.logging.*;
 public class StocksBeetlBench extends Bench {
 
     GroupTemplate group;
-    private String template = "templates/beetl/";
+    private String template = "templates/";
     
     public StocksBeetlBench() {
         group = new GroupTemplate(new File(template));

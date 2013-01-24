@@ -58,7 +58,7 @@ abstract public class Bench implements Runnable {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         StocksVelocityBench bench = new StocksVelocityBench();
         bench.run();
     }

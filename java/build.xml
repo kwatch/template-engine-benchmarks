@@ -20,6 +20,8 @@
     <pathelement location="${lib}/commons-lang3-3.1.jar" />
     <pathelement location="${lib}/rythm-1.0-SNAPSHOT.jar" />
     <pathelement location="${lib}/velocity-1.7-dep.jar" />
+    <pathelement location="${lib}/freemarker-2.3.19.jar" />
+    <pathelement location="${lib}/httl-1.0.5.jar" />
   </path>
 
   <target name="init">
@@ -29,6 +31,7 @@
              classname="org.jamon.ant.JamonTask"
              classpathref="project.class.path"/>
     <jamon destdir="${src}" srcdir="templates" />
+    <copy file="templates/stocks.httl.html" tofile="classes/stocks.httl.html"/>
   </target>
 
   <target name="compile" depends="init">
@@ -71,13 +74,6 @@
     </java>
   </target>
 
-  <target name="kwartzite" depends="compile">
-    <java classname="teb.StocksKwartziteBench" output="output.kwartzite" logError="true" fork="true">
-      <jvmarg value="-server"/>
-      <classpath location="classes" />
-    </java>
-  </target>
-
   <target name="jamon" depends="compile">
     <java classname="teb.StocksJamonBench" output="output.jamon" logError="true" fork="true">
       <jvmarg value="-server"/>
@@ -102,7 +98,24 @@
     </java>
   </target>
 
-  <target name="benchmarks" depends="velocity17,stringbuilder,rythm,kwartzite,jamon,beetl">
+  <target name="freemarker" depends="compile">
+    <java classname="teb.StocksFreeMarkerBench" output="output.freemarker" logError="true" fork="true">
+      <jvmarg value="-server"/>
+      <classpath location="classes" />
+      <classpath refid="project.class.path" />
+    </java>
+  </target>
+
+
+  <target name="httl" depends="compile">
+    <java classname="teb.StocksHttlBench" output="output.httl" logError="true" fork="true">
+      <jvmarg value="-server"/>
+      <classpath location="classes" />
+      <classpath refid="project.class.path" />
+    </java>
+  </target>
+
+  <target name="benchmarks" depends="freemarker,velocity17,stringbuilder,rythm,jamon,beetl,httl">
   </target>
 
   <target name="clean">

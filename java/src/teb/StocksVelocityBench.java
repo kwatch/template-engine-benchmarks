@@ -41,7 +41,7 @@ public class StocksVelocityBench extends Bench {
             //EscapeTool esc = new EscapeTool();
             //context.put("esc", esc);
             /// render template with context data
-            Template template = _engine.getTemplate("stocks.vm", "UTF-8");
+            Template template = _engine.getTemplate("stocks.vm.html", "UTF-8");
             StringWriter writer = new StringWriter(1024);
             template.merge(context, writer);
             output = writer.toString();
