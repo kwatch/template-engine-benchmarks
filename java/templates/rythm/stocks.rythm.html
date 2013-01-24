@@ -1,5 +1,3 @@
-@import teb.Stock
-@args java.util.List<Stock> items
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -53,9 +51,24 @@ thead {
     </tr>
    </thead>
    <tbody>
+   
+@**
+ * Rythm is a static typed template, you need to 
+ * declare variables and you can import any 
+ * packages and classes used in the template
+ *@
+@import teb.Stock
+@args java.util.List<Stock> items
+
+@**
+ * by default rythm escape all expression output
+ * here we use @raw() to prevent escaping as 
+ * we know these are safe data
+ *@
 @raw() {
 @for(item: items) {
     <tr class="@item_parity">
+    @// Rythm allow you to declare local variables and call any java methods inside @{ and }
     @{String symbo = item.getSymbol(); double change = item.getChange();}
      <td style="text-align: center">@item_index</td>
      <td>
