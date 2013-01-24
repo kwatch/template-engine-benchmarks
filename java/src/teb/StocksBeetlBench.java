@@ -38,10 +38,10 @@ public class StocksBeetlBench extends Bench {
         while (--ntimes >= 0) {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
-            //DoNothingOutputSteam out = new DoNothingOutputSteam();
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            DoNothingOutputSteam out = new DoNothingOutputSteam();
+            //ByteArrayOutputStream out = new ByteArrayOutputStream();
             template.getText(out);
-            output = out.toString("utf-8");
+            //output = out.toString("utf-8");
         }
         
         return output;
