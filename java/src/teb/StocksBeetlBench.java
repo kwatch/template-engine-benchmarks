@@ -38,7 +38,8 @@ public class StocksBeetlBench extends Bench {
         while (--ntimes >= 0) {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
-            output = template.getTextAsString();
+            DoNothingOutputSteam byteStream = new DoNothingOutputSteam();
+            output = template.getTextAsString(byteStream);
         }
         
         return output;
@@ -48,4 +49,17 @@ public class StocksBeetlBench extends Bench {
         new StocksBeetlBench().run();
     }
 
+    public static class DoNothingOutputSteam extends java.io.OutputStream {
+
+        @Override
+        public void write(int b) throws IOException {
+        }
+
+        public void write(byte[] bs) throws IOException {
+        }
+
+        public void write(byte b[], int off, int len) throws IOException {
+        }
+
+    }
 }
