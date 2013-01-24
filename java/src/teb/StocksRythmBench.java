@@ -26,9 +26,6 @@ public class StocksRythmBench extends Bench {
         p.put("rythm.tmpDir", "c:\\tmp");
         //p.put("rythm.mode", "dev");
         engine = new RythmEngine(p);//.enterSandbox();
-        if (System.getProperty("rythm-fast") != null) {
-            template = "templates/rythm/stocks.rythm-fast.html";
-        }
     }
     
     protected void shutdown() {

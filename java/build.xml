@@ -7,25 +7,13 @@
   <property environment="env" />
 
   <path id="project.class.path">
-    <!--
-    <pathelement location="${lib}/velocity-1.7.jar" />
-    <pathelement location="${lib}/velocity-1.7-dep.jar" />
-    -->
-    <pathelement location="${lib}/velocity-1.6.4.jar" />
-    <pathelement location="${lib}/velocity-1.6.4-dep.jar" />
-    <!--
-    -->
-    <!--
-    <pathelement location="${lib}/velocity-1.5.jar" />
-    <pathelement location="${lib}/velocity-dep-1.5.jar" />
-    -->
     <pathelement location="${lib}/jamon-anttask-2.4.0.jar" />
     <pathelement location="${lib}/jamon-api-2.3.0.jar" />
     <pathelement location="${lib}/jamon-processor-2.4.0.jar" />
     <pathelement location="${lib}/jamon-runtime-2.4.0.jar" />
     <pathelement location="${lib}/jamon-stdlib-2.4.0.jar" />
-    <pathelement location="${lib}/japid-0.9.2.jar" />
     <pathelement location="${lib}/javaparser-1.0.8.jar" />
+    <pathelement location="${lib}/beetl.1.2Beta.jar" />
     <pathelement location="${lib}/org.eclipse.jdt.core-3.6.0.jar" />
     <pathelement location="${lib}/patbinfree153.jar" />
     <pathelement location="${lib}/ecj-3.7.1.jar" />
@@ -90,15 +78,6 @@
       <classpath refid="project.class.path" />
     </java>
   </target>
-
-   <!--
-  <target name="japid" depends="compile">
-    <java classname="teb.StocksJapidBench" output="output.japid" logError="true" fork="true">
-      <classpath location="classes" />
-      <classpath refid="project.class.path" />
-    </java>
-  </target>
-  -->
   
   <target name="rythm" depends="compile">
     <java classname="teb.StocksRythmBench" output="output.rythm" logError="true" fork="true">
@@ -107,15 +86,14 @@
     </java>
   </target>
 
-  <target name="rythm-fast" depends="compile">
-    <java classname="teb.StocksRythmBench" output="output.rythm" logError="true" fork="true">
+  <target name="beetl" depends="compile">
+    <java classname="teb.StocksBeetlBench" output="output.beetl" logError="true" fork="true">
       <classpath location="classes" />
       <classpath refid="project.class.path" />
-      <sysproperty key="rythm-fast" value="true"/>
     </java>
   </target>
 
-  <target name="benchmarks" depends="velocity17,velocity16,velocity15,stringbuilder,rythm,rythm-fast,kwartzite,jamon">
+  <target name="benchmarks" depends="velocity17,stringbuilder,rythm,kwartzite,jamon">
   </target>
 
   <target name="clean">

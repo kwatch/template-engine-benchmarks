@@ -43,7 +43,7 @@ abstract public class Bench implements Runnable {
             int ntimes = Integer.parseInt(getProp("bench.ntimes"));
             List<Stock> items = Stock.dummyItems();
             /// warm up
-            execute(10, items);
+            execute(1, items);
             /// render N times
             long start_t = System.currentTimeMillis();
             String output = execute(ntimes, items);
