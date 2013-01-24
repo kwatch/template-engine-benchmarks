@@ -22,7 +22,7 @@ public class StocksBeetlBench extends Bench {
         group = new GroupTemplate(new File(template));
         group.config("<!--:", "-->", "${", "}");
         group.setCharset("UTF-8");
-		group.enableOptimize();
+        group.enableOptimize();
     }
     
     protected void shutdown() {
