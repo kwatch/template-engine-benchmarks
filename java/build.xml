@@ -39,6 +39,7 @@
 
   <target name="velocity17" depends="compile">
     <java classname="teb.StocksVelocityBench" output="output.velocity17" logError="true" fork="true">
+      <jvmarg value="-server"/>
       <classpath location="classes" />
       <classpath location="${lib}/velocity-1.7.jar" />
       <classpath location="${lib}/velocity-1.7-dep.jar" />
@@ -47,6 +48,7 @@
 
   <target name="velocity16" depends="compile">
     <java classname="teb.StocksVelocityBench" output="output.velocity16" logError="true" fork="true">
+      <jvmarg value="-server"/>
       <classpath location="classes" />
       <classpath location="${lib}/velocity-1.6.4.jar" />
       <classpath location="${lib}/velocity-1.6.4-dep.jar" />
@@ -55,6 +57,7 @@
 
   <target name="velocity15" depends="compile">
     <java classname="teb.StocksVelocityBench" output="output.velocity15" logError="true" fork="true">
+      <jvmarg value="-server"/>
       <classpath location="classes" />
       <classpath location="${lib}/velocity-1.5.jar" />
       <classpath location="${lib}/velocity-dep-1.5.jar" />
@@ -63,18 +66,21 @@
 
   <target name="stringbuilder" depends="compile">
     <java classname="teb.StocksStringBuilderBench" output="output.stringbuilder" logError="true" fork="true">
+      <jvmarg value="-server"/>
       <classpath location="classes" />
     </java>
   </target>
 
   <target name="kwartzite" depends="compile">
     <java classname="teb.StocksKwartziteBench" output="output.kwartzite" logError="true" fork="true">
+      <jvmarg value="-server"/>
       <classpath location="classes" />
     </java>
   </target>
 
   <target name="jamon" depends="compile">
     <java classname="teb.StocksJamonBench" output="output.jamon" logError="true" fork="true">
+      <jvmarg value="-server"/>
       <classpath location="classes" />
       <classpath refid="project.class.path" />
     </java>
@@ -82,6 +88,7 @@
   
   <target name="rythm" depends="compile">
     <java classname="teb.StocksRythmBench" output="output.rythm" logError="true" fork="true">
+      <jvmarg value="-server"/>
       <classpath location="classes" />
       <classpath refid="project.class.path" />
     </java>
@@ -89,6 +96,7 @@
 
   <target name="beetl" depends="compile">
     <java classname="teb.StocksBeetlBench" output="output.beetl" logError="true" fork="true">
+      <jvmarg value="-server"/>
       <classpath location="classes" />
       <classpath refid="project.class.path" />
     </java>
