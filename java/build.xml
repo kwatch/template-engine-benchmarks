@@ -93,7 +93,7 @@
     </java>
   </target>
 
-  <target name="benchmarks" depends="velocity17,stringbuilder,rythm,kwartzite,jamon">
+  <target name="benchmarks" depends="velocity17,stringbuilder,rythm,kwartzite,jamon,beetl">
   </target>
 
   <target name="clean">

@@ -52,7 +52,7 @@ thead {
    </thead>
    <tbody>
 <!--: for(item in items){  --> 
-    <tr class="">
+    <tr class="${decode(item_index%2,0,"odd","event")}">
      <td style="text-align: center">${item_index}</td>
      <td>
       <a href="/stocks/${item.symbol}">${item.symbol}</a>
@@ -63,15 +63,15 @@ thead {
      <td>
       <strong>@{item.price}</strong>
      </td>
-     <!--: if(change < 0.0) {-->
-     <td class="minus">${change}</td>
+     <!--: if(item.change < 0.0) {-->
+     <td class="minus">${item.change}</td>
      <td class="minus">${item.ratio}</td>
      <!--: } else { -->
-     <td>${change}</td>
+     <td>${item.change}</td>
      <td>${item.ratio}</td>
      <!--: } -->
     </tr>
-<!-- } -->
+<!--: } -->
    </tbody>
   </table>
 
