@@ -13,11 +13,9 @@ public class StocksStringBuilderBench extends Bench {
     public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {    
         String output = null;
         while (--ntimes >= 0) {
-            if (!warmUp && ntimes == 0) output = render(items);
-            else render(items);
-        }
-        if (!warmUp) {
-            w1.write(output);
+            output = render(items);
+            if (!warmUp && ntimes == 0) w0.write(output);
+            else w1.write(output);
         }
     }
 
