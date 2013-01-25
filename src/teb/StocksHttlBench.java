@@ -17,6 +17,7 @@ public class StocksHttlBench extends Bench {
     public StocksHttlBench() throws Exception {
         Properties prop = new Properties();
         prop.setProperty("import.packages", "teb,java.util");
+        prop.setProperty("filter", "null");
         engine = Engine.getEngine(prop);
     }
 
