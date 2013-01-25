@@ -63,7 +63,7 @@ abstract public class Bench implements Runnable {
             long end_t = System.currentTimeMillis();
 
             /// report result
-            String output = useStream() ? w.toString() : out.toString("utf-8");
+            String output = useStream() ? out.toString("utf-8") : w.toString();
             System.err.println("ntimes: " + ntimes + ", real time: " + (end_t - start_t) + "(msec)");
             System.out.print(output);
             
