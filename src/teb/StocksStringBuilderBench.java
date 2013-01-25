@@ -10,14 +10,14 @@ import java.io.*;
 public class StocksStringBuilderBench extends Bench {
 
     @Override
-    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
+    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {    
         String output = null;
         while (--ntimes >= 0) {
             if (!warmUp && ntimes == 0) output = render(items);
             else render(items);
         }
         if (!warmUp) {
-            writer.write(output);
+            w1.write(output);
         }
     }
 

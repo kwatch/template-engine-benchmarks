@@ -28,10 +28,10 @@ abstract public class Bench implements Runnable {
         return getProps().getProperty(key);
     }
 
-    protected void execute(boolean warmUp, Writer w, int ntimes, List<Stock> items) throws Exception {
+    protected void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         // do nothing
     }
-    protected void execute(boolean warmUp, OutputStream out, int ntimes, List<Stock> items) throws Exception {
+    protected void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         // do nothing
     }
     protected boolean useStream() {
@@ -46,24 +46,28 @@ abstract public class Bench implements Runnable {
             int ntimes = Integer.parseInt(getProp("bench.ntimes"));
             List<Stock> items = Stock.dummyItems();
             
-            UnsafeStringWriter w = new UnsafeStringWriter();
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            DoNothingWriter w0 = new DoNothingWriter();
+            UnsafeStringWriter w1 = new UnsafeStringWriter();
+            
+            DoNothingOutputStream o0 = new DoNothingOutputStream();
+            ByteArrayOutputStream o1 = new ByteArrayOutputStream();
+            
             
             /// warm up
-            execute(true, w, 100, items);
+            execute(true, w0, w1, 100, items);
             
             /// render N times
             long start_t = System.currentTimeMillis();
             
             if (useStream()) {
-                execute(false, out, ntimes, items);
+                execute(false, o0, o1, ntimes, items);
             } else {
-                execute(false, w, ntimes, items);
+                execute(false, w0, w1, ntimes, items);
             }
             long end_t = System.currentTimeMillis();
 
             /// report result
-            String output = useStream() ? out.toString("utf-8") : w.toString();
+            String output = useStream() ? o1.toString("utf-8") : w1.toString();
             System.err.println("ntimes: " + ntimes + ", real time: " + (end_t - start_t) + "(msec)");
             System.out.print(output);
             

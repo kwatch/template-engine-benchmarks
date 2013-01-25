@@ -11,10 +11,11 @@ import java.util.List;
 public class StocksJamonBench extends Bench {
 
     @Override
-    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
+    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         while (--ntimes >= 0) {
             /// create context data
-            new jamon.stocks().render(writer, items);
+            if (!warmUp && ntimes == 0) new jamon.stocks().render(w1, items);
+            else new jamon.stocks().render(w0, items);
         }
     }
 

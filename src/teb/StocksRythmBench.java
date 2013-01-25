@@ -33,7 +33,7 @@ public class StocksRythmBench extends Bench {
     }
 
     @Override
-    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
+    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         String output = null;
         String tmpl = template;
         while (--ntimes >= 0) {
@@ -41,7 +41,7 @@ public class StocksRythmBench extends Bench {
             else engine.render(tmpl, items);
         }
         if (!warmUp) {
-            writer.write(output);
+            w1.write(output);
         }
     }
 

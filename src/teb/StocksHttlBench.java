@@ -23,12 +23,14 @@ public class StocksHttlBench extends Bench {
     }
 
     @Override
-    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
+    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         Map<String, Object> params = new HashMap();
         params.put("items", items);
         while (--ntimes >= 0) {
             Template template = engine.getTemplate(templateFile);
-            template.render(params, writer);
+
+            if (!warmUp && ntimes == 0) template.render(params,w1);
+            else template.render(params, w0);
         }
     }
 

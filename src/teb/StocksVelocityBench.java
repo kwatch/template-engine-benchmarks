@@ -31,7 +31,7 @@ public class StocksVelocityBench extends Bench {
     }
 
     @Override
-    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
+    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         while (--ntimes >= 0) {
             /// create context data
             VelocityContext context = new VelocityContext();
@@ -40,7 +40,9 @@ public class StocksVelocityBench extends Bench {
             //context.put("esc", esc);
             /// render template with context data
             Template template = _engine.getTemplate("stocks.vm.html", "UTF-8");
-            template.merge(context, writer);
+
+            if (!warmUp && ntimes == 0) template.merge(context, w1);
+            else template.merge(context, w0);
         }
     }
 

@@ -31,35 +31,34 @@ public class StocksBeetlBench extends Bench {
     protected void shutdown() {
     }
 
+    @Override
     protected boolean useStream() {
         return true;
     }
 
     @Override
-    public void execute(boolean warmUp, OutputStream out, int ntimes, List<Stock> items) throws Exception {
-        String tmpl = template;
+    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         while (--ntimes >= 0) {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
-            template.getText(out);
+            
+            if (!warmUp && ntimes == 0) template.getText(w1);
+            else template.getText(w0);
+        }
+    }
+
+    @Override
+    public void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
+        while (--ntimes >= 0) {
+            Template template = group.getFileTemplate("/stocks.beetl.html");
+            template.set("items", items);
+            
+            if (!warmUp && ntimes == 0) template.getText(o1);
+            else template.getText(o0);
         }
     }
 
     public static void main(String[] args) {
         new StocksBeetlBench().run();
-    }
-
-    public static class DoNothingOutputSteam extends java.io.OutputStream {
-
-        @Override
-        public void write(int b) throws IOException {
-        }
-
-        public void write(byte[] bs) throws IOException {
-        }
-
-        public void write(byte b[], int off, int len) throws IOException{
-        }
-
     }
 }

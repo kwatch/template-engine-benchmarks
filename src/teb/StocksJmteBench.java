@@ -25,7 +25,7 @@ public class StocksJmteBench extends Bench {
     }
     
     @Override
-    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
+    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         String output = null;
         String tmpl = readTemplateFile(template);
         Map<String, Object> model = new HashMap<String, Object>();
@@ -35,7 +35,7 @@ public class StocksJmteBench extends Bench {
             else engine.transform(tmpl, model);
         }
         if (!warmUp) {
-            writer.write(output);
+            w1.write(output);
         }
     }
 
