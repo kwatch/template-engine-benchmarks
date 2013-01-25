@@ -4,9 +4,8 @@
  */
 package teb;
 
-import java.io.StringWriter;
-import java.io.IOException;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.Template;
@@ -32,8 +31,7 @@ public class StocksVelocityBench extends Bench {
     }
 
     @Override
-    public String execute(int ntimes, List<Stock> items) throws Exception {
-        String output = null;
+    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
         while (--ntimes >= 0) {
             /// create context data
             VelocityContext context = new VelocityContext();
@@ -42,11 +40,8 @@ public class StocksVelocityBench extends Bench {
             //context.put("esc", esc);
             /// render template with context data
             Template template = _engine.getTemplate("stocks.vm.html", "UTF-8");
-            StringWriter writer = new StringWriter(1024);
             template.merge(context, writer);
-            output = writer.toString();
         }
-        return output;
     }
 
     public static void main(String[] args) {

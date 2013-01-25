@@ -5,16 +5,20 @@
 package teb;
 
 import java.util.List;
+import java.io.*;
 
 public class StocksStringBuilderBench extends Bench {
 
     @Override
-    public String execute(int ntimes, List<Stock> items) throws Exception {
+    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
         String output = null;
         while (--ntimes >= 0) {
-            output = render(items);
+            if (!warmUp && ntimes == 0) output = render(items);
+            else render(items);
         }
-        return output;
+        if (!warmUp) {
+            writer.write(output);
+        }
     }
 
     public String render(List<Stock> items) {

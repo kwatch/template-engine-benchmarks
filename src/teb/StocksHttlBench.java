@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.*;
 
 import httl.*;
+import httl.util.*;
 
 public class StocksHttlBench extends Bench {
 
@@ -22,22 +23,13 @@ public class StocksHttlBench extends Bench {
     }
 
     @Override
-    public String execute(int ntimes, List<Stock> items) throws Exception {
-        String output = null;
+    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
+        Map<String, Object> params = new HashMap();
+        params.put("items", items);
         while (--ntimes >= 0) {
-        try {
-            StringWriter writer = new StringWriter(1024);
-            Map<String, Object> params = new HashMap();
-            params.put("items", items);
             Template template = engine.getTemplate(templateFile);
             template.render(params, writer);
-            output = writer.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
         }
-        }
-        return output;
     }
 
     public static void main(String[] args) throws Exception {

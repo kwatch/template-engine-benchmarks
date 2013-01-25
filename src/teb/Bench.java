@@ -4,13 +4,8 @@
  */
 package teb;
 
-import java.io.StringWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Properties;
-
+import java.io.*;
+import java.util.*;
 
 abstract public class Bench implements Runnable {
 
@@ -33,7 +28,15 @@ abstract public class Bench implements Runnable {
         return getProps().getProperty(key);
     }
 
-    abstract public String execute(int ntimes, List<Stock> items) throws Exception;
+    protected void execute(boolean warmUp, Writer w, int ntimes, List<Stock> items) throws Exception {
+        // do nothing
+    }
+    protected void execute(boolean warmUp, OutputStream out, int ntimes, List<Stock> items) throws Exception {
+        // do nothing
+    }
+    protected boolean useStream() {
+        return false;
+    }
     
     protected void shutdown() {}
 
@@ -42,15 +45,28 @@ abstract public class Bench implements Runnable {
         try {
             int ntimes = Integer.parseInt(getProp("bench.ntimes"));
             List<Stock> items = Stock.dummyItems();
+            
+            UnsafeStringWriter w = new UnsafeStringWriter();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            
             /// warm up
-            execute(100, items);
+            execute(true, w, 100, items);
+            
             /// render N times
             long start_t = System.currentTimeMillis();
-            String output = execute(ntimes, items);
+            
+            if (useStream()) {
+                execute(false, out, ntimes, items);
+            } else {
+                execute(false, w, ntimes, items);
+            }
             long end_t = System.currentTimeMillis();
+
             /// report result
+            String output = useStream() ? w.toString() : out.toString("utf-8");
             System.err.println("ntimes: " + ntimes + ", real time: " + (end_t - start_t) + "(msec)");
             System.out.print(output);
+            
             shutdown();
         }
         catch (Exception ex) {

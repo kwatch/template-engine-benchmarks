@@ -19,17 +19,13 @@ public class StocksFreeMarkerBench extends Bench {
     }
 
     @Override
-    public String execute(int ntimes, List<Stock> items) throws Exception {
-        String output = null;
+    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
+        Map root = new HashMap();
+        root.put("items", items);
         while (--ntimes >= 0) {
-            StringWriter writer = new StringWriter(1024);
-            Map root = new HashMap();
-            root.put("items", items);
             Template template = cfg.getTemplate("stocks.ftl.html");
             template.process(root, writer);
-            output = writer.toString();
         }
-        return output;
     }
 
     public static void main(String[] args) throws Exception {

@@ -25,16 +25,18 @@ public class StocksJmteBench extends Bench {
     }
     
     @Override
-    public String execute(int ntimes, List<Stock> items) throws Exception {
+    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
         String output = null;
         String tmpl = readTemplateFile(template);
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("items", items);
         while (--ntimes >= 0) {
-            Map<String, Object> model = new HashMap<String, Object>();
-            model.put("items", items);
-            output = engine.transform(tmpl, model);
+            if (!warmUp && ntimes == 0) output = engine.transform(tmpl, model);
+            else engine.transform(tmpl, model);
         }
-        
-        return output;
+        if (!warmUp) {
+            writer.write(output);
+        }
     }
 
     public static void main(String[] args) throws Exception {

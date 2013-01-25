@@ -33,14 +33,16 @@ public class StocksRythmBench extends Bench {
     }
 
     @Override
-    public String execute(int ntimes, List<Stock> items) throws Exception {
+    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
         String output = null;
         String tmpl = template;
         while (--ntimes >= 0) {
-            output = engine.render(tmpl, items);
+            if (!warmUp && ntimes == 0) output = engine.render(tmpl, items);
+            else engine.render(tmpl, items);
         }
-        
-        return output;
+        if (!warmUp) {
+            writer.write(output);
+        }
     }
 
     public static void main(String[] args) {

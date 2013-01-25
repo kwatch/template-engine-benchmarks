@@ -4,23 +4,18 @@
  */
 package teb;
 
-import java.io.StringWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 
 public class StocksJamonBench extends Bench {
 
     @Override
-    public String execute(int ntimes, List<Stock> items) throws Exception {
-        String output = null;
+    public void execute(boolean warmUp, Writer writer, int ntimes, List<Stock> items) throws Exception {
         while (--ntimes >= 0) {
             /// create context data
-            StringWriter writer = new StringWriter(1024);
             new jamon.stocks().render(writer, items);
-            output = writer.toString();
         }
-        return output;
     }
 
     public static void main(String[] args) {

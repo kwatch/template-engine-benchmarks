@@ -31,20 +31,18 @@ public class StocksBeetlBench extends Bench {
     protected void shutdown() {
     }
 
+    protected boolean useStream() {
+        return true;
+    }
+
     @Override
-    public String execute(int ntimes, List<Stock> items) throws Exception {
-        String output = null;
+    public void execute(boolean warmUp, OutputStream out, int ntimes, List<Stock> items) throws Exception {
         String tmpl = template;
         while (--ntimes >= 0) {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
-            DoNothingOutputSteam out = new DoNothingOutputSteam();
-            //ByteArrayOutputStream out = new ByteArrayOutputStream();
             template.getText(out);
-            //output = out.toString("utf-8");
         }
-        
-        return output;
     }
 
     public static void main(String[] args) {
