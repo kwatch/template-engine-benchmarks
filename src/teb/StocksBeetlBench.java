@@ -24,7 +24,7 @@ public class StocksBeetlBench extends Bench {
         group.config("<!--:", "-->", "${", "}");
         group.setCharset("UTF-8");
         group.enableOptimize();
-        group.enableDirectOutputByte();
+        //group.enableDirectOutputByte();
         OutputStreamByteWriter.DEFAULT_BYTE_BUFFER_SIZE = 2048;
     }
     
