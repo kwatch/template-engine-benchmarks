@@ -14,8 +14,8 @@ public class StocksStringBuilderBench extends Bench {
         String output = null;
         while (--ntimes >= 0) {
             output = render(items);
-            if (!warmUp && ntimes == 0) w0.write(output);
-            else w1.write(output);
+            if (!warmUp && ntimes == 0) w1.write(output);
+            else w0.write(output);
         }
     }
 

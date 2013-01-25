@@ -38,8 +38,8 @@ public class StocksRythmBench extends Bench {
         String tmpl = template;
         while (--ntimes >= 0) {
             output = engine.render(tmpl, items);
-            if (!warmUp && ntimes == 0) w0.write(output);
-            else w1.write(output);
+            if (!warmUp && ntimes == 0) w1.write(output);
+            else w0.write(output);
         }
     }
 
