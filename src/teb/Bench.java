@@ -46,11 +46,11 @@ abstract public class Bench implements Runnable {
             int ntimes = Integer.parseInt(getProp("bench.ntimes"));
             List<Stock> items = Stock.dummyItems();
             
-            DoNothingWriter w0 = new DoNothingWriter();
+            StringWriter w0 = new StringWriter();
             UnsafeStringWriter w1 = new UnsafeStringWriter();
             
-            DoNothingOutputStream o0 = new DoNothingOutputStream();
-            ByteArrayOutputStream o1 = new ByteArrayOutputStream();
+            ByteArrayOutputStream o0 = new ByteArrayOutputStream(1024 * 10);
+            ByteArrayOutputStream o1 = new ByteArrayOutputStream(1024 * 10);
             
             
             /// warm up
