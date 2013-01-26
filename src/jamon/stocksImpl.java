@@ -4,7 +4,7 @@
 package jamon;
 
 // 2, 3
-import teb.*;
+import teb.model.Stock;
 
 public class stocksImpl
   extends org.jamon.AbstractTemplateImpl

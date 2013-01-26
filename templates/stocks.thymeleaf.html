@@ -1,19 +1,9 @@
-<%import>
-  teb.model.*;
-</%import>
-<%args>
-  java.util.List<Stock> items;
-</%args>
-<%java>
-  int lc = 0;
-  String klass = "";
-</%java>
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
  <head>
-  <title>Stock Prices - Jamon</title>
+  <title>Stock Prices - Rythm</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
@@ -61,28 +51,21 @@ thead {
     </tr>
    </thead>
    <tbody>
-<%for Stock item: items %>
-    <%java>klass = (lc++ % 2 == 0) ? "even" : "odd"; change = item.getChange();</%java>
-    <tr class="<% klass %>">
-     <td style="text-align: center"><% lc %></td>
+   
+    <tr class="@item_parity" th:each="item,iterStat: ${items}" th:class="${iterStat.odd} ? 'odd' : 'even'" th:with="symbol = ${item.symbol}, change = ${item.change}">
+     <td style="text-align: center" th:text="${iterStat.index}"></td>
      <td>
-      <a href="/stocks/<% item.getSymbol() %>"><% item.getSymbol() %></a>
+      <a th:href="${'/stocks/' + item.symbol}" th:text="${item.symbol}"></a>
      </td>
      <td>
-      <a href="<% item.getUrl() %>"><% item.getName() %></a>
+      <a th:href="${item.url}" th:text="${item.name}"></a>
      </td>
      <td>
-      <strong><% item.getPrice() %></strong>
+      <strong th:text="${item.price}"></strong>
      </td>
-     <%if change < 0.0 %>
-     <td class="minus"><% change %></td>
-     <td class="minus"><% item.getRatio() %></td>
-     <%else>
-     <td><% change %></td>
-     <td><% change %></td>
-     </%if>
+     <td th:text="${item.change}"></td>
+     <td th:text="${item.ratio}"></td>
     </tr>
-</%for>
    </tbody>
   </table>
 

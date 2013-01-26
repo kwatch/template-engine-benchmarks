@@ -4,7 +4,7 @@
 package jamon;
 
 // 2, 3
-import teb.*;
+import teb.model.Stock;
 
 @org.jamon.annotations.Template(
   signature = "7CB9D0F58EF4EF1CFCB571F12DC846AD",

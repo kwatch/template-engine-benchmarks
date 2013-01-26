@@ -10,10 +10,11 @@ import java.util.*;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+import teb.model.Stock;
 //import org.apache.velocity.tools.generic.EscapeTool;
 
 
-public class StocksVelocityBench extends Bench {
+public class Velocity extends _BenchBase {
 
     static VelocityEngine _engine;
     static {
@@ -32,10 +33,10 @@ public class StocksVelocityBench extends Bench {
 
     @Override
     public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
+        /// create context data
+        VelocityContext context = new VelocityContext();
+        context.put("items", items);
         while (--ntimes >= 0) {
-            /// create context data
-            VelocityContext context = new VelocityContext();
-            context.put("items", items);
             //EscapeTool esc = new EscapeTool();
             //context.put("esc", esc);
             /// render template with context data
@@ -47,7 +48,7 @@ public class StocksVelocityBench extends Bench {
     }
 
     public static void main(String[] args) {
-        new StocksVelocityBench().run();
+        new Velocity().run();
     }
 
 }

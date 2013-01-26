@@ -2,7 +2,7 @@
  * $Copyright: copyright(c) 2007-2011 kuwata-lab.com all rights reserved. $
  * $License: Creative Commons Attribution (CC BY) $
  */
-package teb;
+package teb.model;
  
 import java.util.List;
 import java.util.ArrayList;

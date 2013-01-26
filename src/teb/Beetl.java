@@ -10,16 +10,15 @@ import java.util.*;
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
 import org.bee.tl.core.io.OutputStreamByteWriter;
+import teb.model.Stock;
 
-import java.util.logging.*;
 
-
-public class StocksBeetlBench extends Bench {
+public class Beetl extends _BenchBase {
 
     GroupTemplate group;
     private String template = "templates/";
     
-    public StocksBeetlBench() {
+    public Beetl() {
         group = new GroupTemplate(new File(template));
         group.config("<!--:", "-->", "${", "}");
         group.setCharset("UTF-8");
@@ -59,6 +58,6 @@ public class StocksBeetlBench extends Bench {
     }
 
     public static void main(String[] args) {
-        new StocksBeetlBench().run();
+        new Beetl().run();
     }
 }

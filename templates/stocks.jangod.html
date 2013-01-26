@@ -1,19 +1,9 @@
-<%import>
-  teb.model.*;
-</%import>
-<%args>
-  java.util.List<Stock> items;
-</%args>
-<%java>
-  int lc = 0;
-  String klass = "";
-</%java>
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
  <head>
-  <title>Stock Prices - Jamon</title>
+  <title>Stock Prices - Velocity</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
@@ -61,28 +51,27 @@ thead {
     </tr>
    </thead>
    <tbody>
-<%for Stock item: items %>
-    <%java>klass = (lc++ % 2 == 0) ? "even" : "odd"; change = item.getChange();</%java>
-    <tr class="<% klass %>">
-     <td style="text-align: center"><% lc %></td>
+{% for item in items %}
+    <tr class="{% if loop.counter % 2 == 0 %}even{% else %}odd{% endif %}">
+     <td style="text-align: center">{{loop.counter}}</td>
      <td>
-      <a href="/stocks/<% item.getSymbol() %>"><% item.getSymbol() %></a>
+      <a href="/stocks/{{item.symbol}}">{{item.symbol}}</a>
      </td>
      <td>
-      <a href="<% item.getUrl() %>"><% item.getName() %></a>
+      <a href="${item.url}">{{item.name}}</a>
      </td>
      <td>
-      <strong><% item.getPrice() %></strong>
+      <strong>{{item.price}}</strong>
      </td>
-     <%if change < 0.0 %>
-     <td class="minus"><% change %></td>
-     <td class="minus"><% item.getRatio() %></td>
-     <%else>
-     <td><% change %></td>
-     <td><% change %></td>
-     </%if>
+     {% if item.change < 0.0 %}
+     <td class="minus">{{item.change}}</td>
+     <td class="minus">{{item.ratio}}</td>
+     {% else %}
+     <td>{{item.change}}</td>
+     <td>{{item.ratio}}</td>
+     {% endif %}
     </tr>
-</%for>
+{% endfor %}
    </tbody>
   </table>
 

@@ -1,4 +1,4 @@
-package teb;
+package teb.util;
 
 import java.io.*;
 

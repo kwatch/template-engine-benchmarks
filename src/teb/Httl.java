@@ -8,17 +8,18 @@ import java.io.*;
 import java.util.*;
 
 import httl.*;
-import httl.util.*;
+import teb.model.Stock;
 
-public class StocksHttlBench extends Bench {
+public class Httl extends _BenchBase {
 
     private Engine engine;
     private String templateFile = "/stocks.httl.html";
     
-    public StocksHttlBench() throws Exception {
+    public Httl() throws Exception {
         Properties prop = new Properties();
-        prop.setProperty("import.packages", "teb,java.util");
+        prop.setProperty("import.packages", "teb.model,java.util");
         prop.setProperty("filter", "null");
+        prop.setProperty("logger", "null");
         engine = Engine.getEngine(prop);
     }
 
@@ -35,7 +36,7 @@ public class StocksHttlBench extends Bench {
     }
 
     public static void main(String[] args) throws Exception {
-        new StocksHttlBench().run();
+        new Httl().run();
     }
 
 }

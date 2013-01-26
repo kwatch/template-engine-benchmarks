@@ -8,18 +8,15 @@ import java.io.*;
 import java.util.*;
 
 import com.greenlaw110.rythm.*;
-import com.greenlaw110.rythm.template.*;
-import com.greenlaw110.rythm.internal.compiler.*;
-
-import java.util.logging.*;
+import teb.model.Stock;
 
 
-public class StocksRythmBench extends Bench {
+public class Rythm extends _BenchBase {
 
     RythmEngine engine;
     private String template = "templates/stocks.rythm.html";
     
-    public StocksRythmBench() {
+    public Rythm() {
         Properties p = new Properties();
         p.put("rythm.cache.enabled", false);
         p.put("rythm.logger.disabled", true);
@@ -29,7 +26,7 @@ public class StocksRythmBench extends Bench {
     }
     
     protected void shutdown() {
-        engine.shutdown();
+        //engine.shutdown();
     }
 
     @Override
@@ -44,7 +41,7 @@ public class StocksRythmBench extends Bench {
     }
 
     public static void main(String[] args) {
-        new StocksRythmBench().run();
+        new Rythm().run();
     }
 
 }

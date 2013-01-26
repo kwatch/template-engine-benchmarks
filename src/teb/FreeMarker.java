@@ -8,11 +8,12 @@ import java.io.*;
 import java.util.*;
 
 import freemarker.template.*;
+import teb.model.Stock;
 
-public class StocksFreeMarkerBench extends Bench {
+public class FreeMarker extends _BenchBase {
 
     private Configuration cfg;
-    public StocksFreeMarkerBench() throws Exception {
+    public FreeMarker() throws Exception {
         cfg = new Configuration();
         cfg.setDirectoryForTemplateLoading(new File("templates/"));
         cfg.setObjectWrapper(new DefaultObjectWrapper());  
@@ -31,7 +32,7 @@ public class StocksFreeMarkerBench extends Bench {
     }
 
     public static void main(String[] args) throws Exception {
-        new StocksFreeMarkerBench().run();
+        new FreeMarker().run();
     }
 
 }

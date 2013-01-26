@@ -11,16 +11,15 @@ import java.nio.charset.*;
 import java.util.*;
 
 import com.floreysoft.jmte.*;
+import teb.model.Stock;
 
-import java.util.logging.*;
 
-
-public class StocksJmteBench extends Bench {
+public class JMTE extends _BenchBase {
 
     Engine engine;
     private String template = "templates/stocks.jmte.html";
     
-    public StocksJmteBench() {
+    public JMTE() {
         engine = new Engine();
     }
     
@@ -40,7 +39,7 @@ public class StocksJmteBench extends Bench {
     }
 
     public static void main(String[] args) throws Exception {
-        new StocksJmteBench().run();
+        new JMTE().run();
     }
     
     private String readTemplateFile(String fileName) throws Exception {

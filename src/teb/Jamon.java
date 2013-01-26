@@ -4,11 +4,13 @@
  */
 package teb;
 
+import teb.model.Stock;
+
 import java.io.*;
 import java.util.List;
 
 
-public class StocksJamonBench extends Bench {
+public class Jamon extends _BenchBase {
 
     @Override
     public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
@@ -20,7 +22,7 @@ public class StocksJamonBench extends Bench {
     }
 
     public static void main(String[] args) {
-        new StocksJamonBench().run();
+        new Jamon().run();
     }
 
 }

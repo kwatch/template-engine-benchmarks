@@ -4,10 +4,12 @@
  */
 package teb;
 
+import teb.model.Stock;
+
 import java.util.List;
 import java.io.*;
 
-public class StocksStringBuilderBench extends Bench {
+public class StringBuilder extends _BenchBase {
 
     @Override
     public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {    
@@ -20,7 +22,7 @@ public class StocksStringBuilderBench extends Bench {
     }
 
     public String render(List<Stock> items) {
-        StringBuilder sb = new StringBuilder(1024);  // or new StringBuilder(8000)
+        java.lang.StringBuilder sb = new java.lang.StringBuilder(1024);  // or new StringBuilder(8000)
         sb.append(""
             + "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n"
@@ -112,7 +114,7 @@ public class StocksStringBuilderBench extends Bench {
     }
 
     public static void main(String[] args) {
-        new StocksStringBuilderBench().run();
+        new StringBuilder().run();
     }
 
 }

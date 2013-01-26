@@ -1,121 +1,142 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="template-shootout" default="benchmarks" basedir=".">
 
-  <property name="src"     location="src" />
-  <property name="classes" location="classes" />
-  <property name="lib"     location="lib" />
-  <property name="output"     location="output" />
-  <property environment="env" />
+    <property name="src" location="src"/>
+    <property name="classes" location="classes"/>
+    <property name="lib" location="lib"/>
+    <property name="output" location="output"/>
+    <property environment="env"/>
 
-  <path id="project.class.path">
-    <pathelement location="${lib}/jamon-anttask-2.4.0.jar" />
-    <pathelement location="${lib}/jamon-api-2.3.0.jar" />
-    <pathelement location="${lib}/jamon-processor-2.4.0.jar" />
-    <pathelement location="${lib}/jamon-runtime-2.4.0.jar" />
-    <pathelement location="${lib}/jamon-stdlib-2.4.0.jar" />
-    <pathelement location="${lib}/javaparser-1.0.8.jar" />
-    <pathelement location="${lib}/beetl.1.2Beta.jar" />
-    <pathelement location="${lib}/org.eclipse.jdt.core-3.6.0.jar" />
-    <pathelement location="${lib}/patbinfree153.jar" />
-    <pathelement location="${lib}/ecj-3.7.1.jar" />
-    <pathelement location="${lib}/commons-lang3-3.1.jar" />
-    <pathelement location="${lib}/rythm-1.0-SNAPSHOT.jar" />
-    <pathelement location="${lib}/velocity-1.7-dep.jar" />
-    <pathelement location="${lib}/freemarker-2.3.19.jar" />
-    <pathelement location="${lib}/httl-1.0.5.jar" />
-    <pathelement location="${lib}/jmte-2.2.jar" />
-  </path>
+    <path id="project.class.path">
+        <pathelement location="${lib}/jamon-anttask-2.4.0.jar"/>
+        <pathelement location="${lib}/jamon-api-2.3.0.jar"/>
+        <pathelement location="${lib}/jamon-processor-2.4.0.jar"/>
+        <pathelement location="${lib}/jamon-runtime-2.4.0.jar"/>
+        <pathelement location="${lib}/jamon-stdlib-2.4.0.jar"/>
+        <pathelement location="${lib}/javaparser-1.0.8.jar"/>
+        <pathelement location="${lib}/beetl.1.2Beta.jar"/>
+        <pathelement location="${lib}/org.eclipse.jdt.core-3.6.0.jar"/>
+        <pathelement location="${lib}/patbinfree153.jar"/>
+        <pathelement location="${lib}/ecj-3.7.1.jar"/>
+        <pathelement location="${lib}/commons-lang3-3.1.jar"/>
+        <pathelement location="${lib}/rythm-1.0-SNAPSHOT.jar"/>
+        <pathelement location="${lib}/velocity-1.7-dep.jar"/>
+        <pathelement location="${lib}/freemarker-2.3.19.jar"/>
+        <pathelement location="${lib}/httl-1.0.5.jar"/>
+        <pathelement location="${lib}/jmte-2.2.jar"/>
+        <pathelement location="${lib}/jangod-template.jar"/>
+        <pathelement location="${lib}/thymeleaf-2.0.15.jar"/>
+        <pathelement location="${lib}/javassist-3.16.1-GA.jar"/>
+        <pathelement location="${lib}/ognl-3.0.5.jar"/>
+        <pathelement location="${lib}/slf4j-api-1.6.1.jar"/>
+    </path>
 
-  <target name="init">
-    <tstamp/>
-    <mkdir dir="${classes}" />
-    <taskdef name="jamon"
-             classname="org.jamon.ant.JamonTask"
-             classpathref="project.class.path"/>
-    <jamon destdir="${src}" srcdir="templates" />
-    <copy file="templates/stocks.httl.html" tofile="classes/stocks.httl.html"/>
-    <mkdir dir="${output}" />
-  </target>
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${classes}"/>
+        <taskdef name="jamon"
+                 classname="org.jamon.ant.JamonTask"
+                 classpathref="project.class.path"/>
+        <jamon destdir="${src}" srcdir="templates"/>
+        <copy file="templates/stocks.httl.html" tofile="classes/stocks.httl.html"/>
+        <mkdir dir="${output}"/>
+    </target>
 
-  <target name="compile" depends="init">
-    <javac srcdir="${src}" destdir="${classes}" includeantruntime="true">
-      <classpath refid="project.class.path" />
-    </javac>
-  </target>
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${classes}" includeantruntime="true">
+            <classpath refid="project.class.path"/>
+        </javac>
+    </target>
 
-  <target name="velocity" depends="compile">
-    <java classname="teb.StocksVelocityBench" output="output/velocity.html" logError="true" fork="true">
-      <jvmarg value="-server"/>
-      <classpath location="classes" />
-      <classpath location="${lib}/velocity-1.7.jar" />
-      <classpath location="${lib}/velocity-1.7-dep.jar" />
-    </java>
-  </target>
+    <target name="velocity" depends="compile">
+        <java classname="teb.Velocity" output="output/velocity.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+            <classpath location="${lib}/velocity-1.7.jar"/>
+            <classpath location="${lib}/velocity-1.7-dep.jar"/>
+        </java>
+    </target>
 
-  <target name="stringbuilder" depends="compile">
-    <java classname="teb.StocksStringBuilderBench" output="output/stringbuilder.html" logError="true" fork="true">
-      <jvmarg value="-server"/>
-      <classpath location="classes" />
-    </java>
-  </target>
+    <target name="stringbuilder" depends="compile">
+        <java classname="teb.StringBuilder" output="output/stringbuilder.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+        </java>
+    </target>
 
-  <target name="jamon" depends="compile">
-    <java classname="teb.StocksJamonBench" output="output/jamon.html" logError="true" fork="true">
-      <jvmarg value="-server"/>
-      <classpath location="classes" />
-      <classpath refid="project.class.path" />
-    </java>
-  </target>
-  
-  <target name="rythm" depends="compile">
-    <java classname="teb.StocksRythmBench" output="output/rythm.html" logError="true" fork="true">
-      <jvmarg value="-server"/>
-      <classpath location="classes" />
-      <classpath refid="project.class.path" />
-    </java>
-  </target>
+    <target name="jamon" depends="compile">
+        <java classname="teb.Jamon" output="output/jamon.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+            <classpath refid="project.class.path"/>
+        </java>
+    </target>
 
-  <target name="beetl" depends="compile">
-    <java classname="teb.StocksBeetlBench" output="output/beetl.html" logError="true" fork="true">
-      <jvmarg value="-server"/>
-      <classpath location="classes" />
-      <classpath refid="project.class.path" />
-    </java>
-  </target>
+    <target name="rythm" depends="compile">
+        <java classname="teb.Rythm" output="output/rythm.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+            <classpath refid="project.class.path"/>
+        </java>
+    </target>
 
-  <target name="freemarker" depends="compile">
-    <java classname="teb.StocksFreeMarkerBench" output="output/freemarker.html" logError="true" fork="true">
-      <jvmarg value="-server"/>
-      <classpath location="classes" />
-      <classpath refid="project.class.path" />
-    </java>
-  </target>
+    <target name="beetl" depends="compile">
+        <java classname="teb.Beetl" output="output/beetl.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+            <classpath refid="project.class.path"/>
+        </java>
+    </target>
 
-  <target name="httl" depends="compile">
-    <java classname="teb.StocksHttlBench" output="output/httl.html" logError="true" fork="true">
-      <jvmarg value="-server"/>
-      <classpath location="classes" />
-      <classpath refid="project.class.path" />
-    </java>
-  </target>
+    <target name="freemarker" depends="compile">
+        <java classname="teb.FreeMarker" output="output/freemarker.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+            <classpath refid="project.class.path"/>
+        </java>
+    </target>
 
-  <target name="jmte" depends="compile">
-    <java classname="teb.StocksJmteBench" output="output/jmte.html" logError="true" fork="true">
-      <jvmarg value="-server"/>
-      <classpath location="classes" />
-      <classpath refid="project.class.path" />
-    </java>
-  </target>
+    <target name="httl" depends="compile">
+        <java classname="teb.Httl" output="output/httl.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+            <classpath refid="project.class.path"/>
+        </java>
+    </target>
 
-  <target name="benchmarks" depends="stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte">
-  </target>
+    <target name="jmte" depends="compile">
+        <java classname="teb.JMTE" output="output/jmte.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+            <classpath refid="project.class.path"/>
+        </java>
+    </target>
 
-  <target name="clean">
-    <delete dir="${classes}" />
-    <delete dir="${output}" />
-    <delete>
-      <fileset dir="." includes="output/*" />
-    </delete>
-  </target>
+    <target name="jangod" depends="compile">
+        <java classname="teb.Jangod" output="output/jangod.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+            <classpath refid="project.class.path"/>
+        </java>
+    </target>
+
+    <target name="thymeleaf" depends="compile">
+        <java classname="teb.Thymeleaf" output="output/thymeleaf.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <classpath location="classes"/>
+            <classpath refid="project.class.path"/>
+        </java>
+    </target>
+
+    <target name="benchmarks" depends="stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte,jangod,thymeleaf">
+    </target>
+
+    <target name="clean">
+        <delete dir="${classes}"/>
+        <delete dir="${output}"/>
+        <delete>
+            <fileset dir="." includes="output/*"/>
+        </delete>
+    </target>
 
 </project>
