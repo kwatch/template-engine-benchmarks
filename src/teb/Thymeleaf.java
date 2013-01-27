@@ -22,6 +22,7 @@ public class Thymeleaf extends _BenchBase {
     TemplateEngine engine;
 
     public Thymeleaf() {
+        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "error");
         engine = new TemplateEngine();
         FileTemplateResolver resolver = new FileTemplateResolver();
         engine.setTemplateResolver(resolver);
