@@ -53,8 +53,8 @@ thead {
    </thead>
    <tbody>
 <!--#foreach(item in items)-->
-    <tr class="${foreach.index % 2 == 0 ? "even" : "odd"}">
-     <td style="text-align: center">${foreach.size}</td>
+    <tr class="${foreach.index % 2 == 1 ? "even" : "odd"}">
+     <td style="text-align: center">${foreach.index + 1}</td>
      <td>
       <a href="/stocks/${item.symbol}">${item.symbol}</a>
      </td>

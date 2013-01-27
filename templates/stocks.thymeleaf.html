@@ -3,7 +3,7 @@
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
  <head>
-  <title>Stock Prices - Rythm</title>
+  <title>Stock Prices - Thymeleaf</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
@@ -52,8 +52,8 @@ thead {
    </thead>
    <tbody>
    
-    <tr class="@item_parity" th:each="item,iterStat: ${items}" th:class="${iterStat.odd} ? 'odd' : 'even'" th:with="symbol = ${item.symbol}, change = ${item.change}">
-     <td style="text-align: center" th:text="${iterStat.index}"></td>
+    <tr th:each="item,iterStat: ${items}" th:class="${iterStat.odd} ? 'odd' : 'even'">
+     <td style="text-align: center" th:text="${iterStat.index }"></td>
      <td>
       <a th:href="${'/stocks/' + item.symbol}" th:text="${item.symbol}"></a>
      </td>
@@ -63,8 +63,8 @@ thead {
      <td>
       <strong th:text="${item.price}"></strong>
      </td>
-     <td th:text="${item.change}"></td>
-     <td th:text="${item.ratio}"></td>
+     <td th:text="${item.change}" th:class="${item.change &lt; 0.0 ? 'minus' : ''}"></td>
+     <td th:text="${item.ratio}" th:class="${item.change &lt; 0.0 ? 'minus' : ''}"></td>
     </tr>
    </tbody>
   </table>
