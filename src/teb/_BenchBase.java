@@ -60,9 +60,9 @@ abstract public class _BenchBase implements Runnable {
 
             /// warm up
             if (useStream()) {
-                execute(false, o0, o1, 100, items);
+                execute(true, o0, o1, 1, items);
             } else {
-                execute(true, w0, w1, 100, items);
+                execute(true, w0, w1, 1, items);
             }
 
             /// render N times
@@ -74,6 +74,10 @@ abstract public class _BenchBase implements Runnable {
                 execute(false, w0, w1, ntimes, items);
             }
             long end_t = System.currentTimeMillis();
+            o0.close();
+            o1.close();
+            w0.close();
+            w1.close();
 
             /// report result
             String output = useStream() ? o1.toString("utf-8") : w1.toString();

@@ -35,6 +35,23 @@ public class Httl extends _BenchBase {
         }
     }
 
+    @Override
+    public void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
+        Map<String, Object> params = new HashMap();
+        params.put("items", items);
+        while (--ntimes >= 0) {
+            Template template = engine.getTemplate(templateFile);
+
+            if (!warmUp && ntimes == 0) template.render(params,o1);
+            else template.render(params, o0);
+        }
+    }
+
+    @Override
+    protected boolean useStream() {
+        return true;
+    }
+
     public static void main(String[] args) throws Exception {
         new Httl().run();
     }

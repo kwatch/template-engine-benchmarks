@@ -45,6 +45,8 @@ public class Beetl extends _BenchBase {
             else template.getText(w0);
         }
     }
+    
+    private static Template t = null;
 
     @Override
     public void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {

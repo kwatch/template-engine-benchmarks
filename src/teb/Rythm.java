@@ -19,7 +19,7 @@ public class Rythm extends _BenchBase {
     public Rythm() {
         Properties p = new Properties();
         p.put("rythm.cache.enabled", false);
-        p.put("rythm.logger.disabled", true);
+        //p.put("rythm.logger.disabled", true);
         p.put("rythm.tmpDir", "c:\\tmp");
         //p.put("rythm.mode", "dev");
         engine = new RythmEngine(p);//.enterSandbox();
@@ -34,28 +34,33 @@ public class Rythm extends _BenchBase {
         String output;
         String tmpl = template;
         while (--ntimes >= 0) {
-            output = engine.render(tmpl, items);
-            if (!warmUp && ntimes == 0) w1.write(output);
-            else w0.write(output);
+            //output = engine.render(tmpl, items);
+            if (!warmUp && ntimes == 0) {
+                //w1.write(output);
+                engine.render(w1, tmpl, items);
+            } else {
+                //w0.write(output);
+                engine.render(w0, tmpl, items);
+            }
         }
     }
 
     @Override
     public void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
-        String output;
         String tmpl = template;
-        Writer w0 = new BufferedWriter(new OutputStreamWriter(o0));
-        Writer w1 = new BufferedWriter(new OutputStreamWriter(o1));
         while (--ntimes >= 0) {
-            output = engine.render(tmpl, items);
-            if (!warmUp && ntimes == 0) w1.write(output);
-            else w0.write(output);
+            if (!warmUp && ntimes == 0) {
+                engine.render(o1, tmpl, items);
+            }
+            else {
+                engine.render(o0, tmpl, items);
+            }
         }
     }
 
     @Override
     protected boolean useStream() {
-        return true;
+        return false;
     }
 
     public static void main(String[] args) {

@@ -52,8 +52,8 @@ public class Velocity extends _BenchBase {
         /// create context data
         VelocityContext context = new VelocityContext();
         context.put("items", items);
-        Writer w0 = new BufferedWriter(new OutputStreamWriter(o0));
-        Writer w1 = new BufferedWriter(new OutputStreamWriter(o1));
+        Writer w0 = new OutputStreamWriter(o0);
+        Writer w1 = new OutputStreamWriter(o1);
         while (--ntimes >= 0) {
             //EscapeTool esc = new EscapeTool();
             //context.put("esc", esc);
