@@ -30,11 +30,6 @@ public class Rythm extends _BenchBase {
     }
 
     @Override
-    protected boolean useStream() {
-        return true;
-    }
-
-    @Override
     public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         String output;
         String tmpl = template;
@@ -56,6 +51,11 @@ public class Rythm extends _BenchBase {
             if (!warmUp && ntimes == 0) w1.write(output);
             else w0.write(output);
         }
+    }
+
+    @Override
+    protected boolean useStream() {
+        return true;
     }
 
     public static void main(String[] args) {

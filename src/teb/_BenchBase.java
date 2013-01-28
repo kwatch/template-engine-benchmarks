@@ -59,7 +59,11 @@ abstract public class _BenchBase implements Runnable {
 
 
             /// warm up
-            execute(true, w0, w1, 100, items);
+            if (useStream()) {
+                execute(false, o0, o1, 100, items);
+            } else {
+                execute(true, w0, w1, 100, items);
+            }
 
             /// render N times
             long start_t = System.currentTimeMillis();
