@@ -39,8 +39,12 @@ public class Jamon extends _BenchBase {
 
     @Override
     protected String execute(int ntimes, List<Stock> items) throws Exception {
-        StringWriter w0 = new StringWriter();
-        StringWriter w1 = new StringWriter();
+        Writer w0 = new StringWriter(1024 * 10);
+        Writer w1 = new StringWriter(1024 * 10);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             /// create context data
             if (ntimes == 0) {

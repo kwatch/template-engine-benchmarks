@@ -36,8 +36,12 @@ public class FreeMarker extends _BenchBase {
     public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         Map root = new HashMap();
         root.put("items", items);
-        Writer w0 = new BufferedWriter(new OutputStreamWriter(o0));
-        Writer w1 = new BufferedWriter(new OutputStreamWriter(o1));
+        Writer w0 = new OutputStreamWriter(o0);
+        Writer w1 = new OutputStreamWriter(o1);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             Template template = cfg.getTemplate("stocks.ftl.html");
 
@@ -50,8 +54,12 @@ public class FreeMarker extends _BenchBase {
     protected String execute(int ntimes, List<Stock> items) throws Exception {
         Map root = new HashMap();
         root.put("items", items);
-        StringWriter w0 = new StringWriter();
-        StringWriter w1 = new StringWriter();
+        Writer w0 = new StringWriter();
+        Writer w1 = new StringWriter();
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             Template template = cfg.getTemplate("stocks.ftl.html");
 

@@ -10,10 +10,7 @@ import org.thymeleaf.context.IContext;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import teb.model.Stock;
 
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -49,6 +46,10 @@ public class Thymeleaf extends _BenchBase {
         IContext ctx = new Context(Locale.getDefault(), params);
         Writer w1 = new OutputStreamWriter(o1);
         Writer w0 = new OutputStreamWriter(o0);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             if (ntimes == 0) engine.process("templates/stocks.thymeleaf.html", ctx, w1);
             else engine.process("templates/stocks.thymeleaf.html", ctx, w0);
@@ -62,6 +63,10 @@ public class Thymeleaf extends _BenchBase {
         IContext ctx = new Context(Locale.getDefault(), params);
         Writer w1 = new StringWriter(1024 * 10);
         Writer w0 = new StringWriter(1024 * 10);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             if (ntimes == 0) engine.process("templates/stocks.thymeleaf.html", ctx, w1);
             else engine.process("templates/stocks.thymeleaf.html", ctx, w0);

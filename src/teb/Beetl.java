@@ -57,17 +57,21 @@ public class Beetl extends _BenchBase {
 
     @Override
     protected String execute(int ntimes, List<Stock> items) throws Exception {
-        ByteArrayOutputStream o0 = new ByteArrayOutputStream();
-        ByteArrayOutputStream o1 = new ByteArrayOutputStream(1024 * 10);
+        Writer w0 = new StringWriter(1024 * 10);
+        Writer w1 = new StringWriter(1024 * 10);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
             
-            if (ntimes == 0) template.getText(o1);
-            else template.getText(o0);
+            if (ntimes == 0) template.getText(w1);
+            else template.getText(w0);
         }
         
-        return new String(o1.toByteArray());
+        return w1.toString();
     }
 
     public static void main(String[] args) {

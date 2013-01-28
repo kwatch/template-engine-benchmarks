@@ -44,6 +44,10 @@ public class JMTE extends _BenchBase {
         model.put("items", items);
         Writer w1 = new OutputStreamWriter(o1);
         Writer w0 = new OutputStreamWriter(o0);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             output = engine.transform(tmpl, model);
             if (ntimes == 0) w1.write(output);

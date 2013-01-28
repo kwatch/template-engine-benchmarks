@@ -7,6 +7,7 @@ package teb;
 import net.asfun.jangod.template.TemplateEngine;
 import teb.model.Stock;
 
+import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -46,6 +47,10 @@ public class Jangod extends _BenchBase {
         params.put("items", items);
         Writer w1 = new OutputStreamWriter(o1);
         Writer w0 = new OutputStreamWriter(o0);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             output = engine.process(tmpl, params);
             if (ntimes == 0) w1.write(output);

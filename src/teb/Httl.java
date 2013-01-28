@@ -52,15 +52,19 @@ public class Httl extends _BenchBase {
     protected String execute(int ntimes, List<Stock> items) throws Exception {
         Map<String, Object> params = new HashMap();
         params.put("items", items);
-        ByteArrayOutputStream o0 = new ByteArrayOutputStream();
-        ByteArrayOutputStream o1 = new ByteArrayOutputStream(1024 * 10);
+        Writer w0 = new StringWriter();
+        Writer w1 = new StringWriter(1024 * 10);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             Template template = engine.getTemplate(templateFile);
 
-            if (ntimes == 0) template.render(params,o1);
-            else template.render(params, o0);
+            if (ntimes == 0) template.render(params,w1);
+            else template.render(params, w0);
         }
-        return new String(o1.toByteArray());
+        return w1.toString();
     }
 
     public static void main(String[] args) throws Exception {

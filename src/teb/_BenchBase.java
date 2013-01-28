@@ -8,7 +8,6 @@ import teb.model.Stock;
 
 import java.io.*;
 import java.util.List;
-import java.util.Properties;
 
 abstract public class _BenchBase implements Runnable {
 
@@ -29,32 +28,44 @@ abstract public class _BenchBase implements Runnable {
     protected void shutdown() {
     }
     
-    private static enum IO {
-        os("=============== Benchmark output to OutputStream =============="), // output to OutputStream
-        w("=============== Benchmark output to Writer =============="), // output to Writer
-        s("=============== Benchmark Return a String =============="); // return a String
-        private String msg;
-        private IO(String s) {msg = s;}
+    private static enum OutputMode {
+        os, // output to OutputStream
+        w, // output to Writer
+        s; // return a String
     }
+    
+    static final ThreadLocal<Boolean> bufferMode = new ThreadLocal<Boolean>();
 
     @Override
     public void run() {
-        int wtimes = Integer.parseInt(System.getProperty("bench.wtimes", "100"));
-        int ntimes = Integer.parseInt(System.getProperty("bench.ntimes", "100"));
-        String s = System.getProperty("bench.io", "s");
-        IO io = IO.valueOf(s);
+        int wtimes = Integer.parseInt(System.getProperty("wtimes", "100"));
+        int ntimes = Integer.parseInt(System.getProperty("ntimes", "100"));
+        boolean useBuffer = Boolean.parseBoolean(System.getProperty("buf", "true"));
+        bufferMode.set(useBuffer);
+        String s = System.getProperty("out", "s");
+        OutputMode outMode = OutputMode.valueOf(s);
         try {
             List<Stock> items = Stock.dummyItems();
 
-            StringWriter w0 = new StringWriter();
-            StringWriter w1 = new StringWriter();
+            Writer w0 = new StringWriter(1024 * 10);
+            Writer w1 = new BufferedWriter(new StringWriter(1024 * 10));
+            if (useBuffer) {
+            }
+            
+            ByteArrayOutputStream baos = new ByteArrayOutputStream(1024 * 10);
+            OutputStream o0 = new ByteArrayOutputStream(1024 * 10);
+            OutputStream o1 = baos;
+            
+            if (useBuffer) {
+                w0 = new BufferedWriter(w0);
+                w1 = new BufferedWriter(w1);
 
-            ByteArrayOutputStream o0 = new ByteArrayOutputStream(1024 * 10);
-            ByteArrayOutputStream o1 = new ByteArrayOutputStream(1024 * 10);
-
+                o0 = new BufferedOutputStream(o0);
+                o1 = new BufferedOutputStream(o1);
+            }
 
             /// warm up
-            switch (io) {
+            switch (outMode) {
                 case os: execute(o0, o0, wtimes, items); break;
                 case w: execute(w0, w0, wtimes, items); break;
                 default: execute(1, items);
@@ -65,7 +76,7 @@ abstract public class _BenchBase implements Runnable {
             /// render N times
             long start_t = System.currentTimeMillis();
 
-            switch (io) {
+            switch (outMode) {
                 case os: execute(o0, o1, ntimes, items); break;
                 case w: execute(w0, w1, ntimes, items); break;
                 default: output = execute(ntimes, items);
@@ -77,8 +88,8 @@ abstract public class _BenchBase implements Runnable {
             w1.close();
 
             /// report result
-            switch (io) {
-                case os: output = o1.toString("utf-8"); break;
+            switch (outMode) {
+                case os: output = baos.toString("utf-8"); break;
                 case w: output = w1.toString();
             }
             System.err.println("ntimes: " + ntimes + ", real time: " + (end_t - start_t) + "(msec)");
