@@ -11,6 +11,7 @@ import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
 import org.bee.tl.core.io.OutputStreamByteWriter;
 import teb.model.Stock;
+import teb.util.DoNothingOutputStream;
 
 
 public class Beetl extends _BenchBase {
@@ -31,17 +32,12 @@ public class Beetl extends _BenchBase {
     }
 
     @Override
-    protected boolean useStream() {
-        return true;
-    }
-
-    @Override
-    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         while (--ntimes >= 0) {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
             
-            if (!warmUp && ntimes == 0) template.getText(w1);
+            if (ntimes == 0) template.getText(w1);
             else template.getText(w0);
         }
     }
@@ -49,14 +45,29 @@ public class Beetl extends _BenchBase {
     private static Template t = null;
 
     @Override
-    public void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         while (--ntimes >= 0) {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
             
-            if (!warmUp && ntimes == 0) template.getText(o1);
+            if (ntimes == 0) template.getText(o1);
             else template.getText(o0);
         }
+    }
+
+    @Override
+    protected String execute(int ntimes, List<Stock> items) throws Exception {
+        ByteArrayOutputStream o0 = new ByteArrayOutputStream();
+        ByteArrayOutputStream o1 = new ByteArrayOutputStream(1024 * 10);
+        while (--ntimes >= 0) {
+            Template template = group.getFileTemplate("/stocks.beetl.html");
+            template.set("items", items);
+            
+            if (ntimes == 0) template.getText(o1);
+            else template.getText(o0);
+        }
+        
+        return new String(o1.toByteArray());
     }
 
     public static void main(String[] args) {

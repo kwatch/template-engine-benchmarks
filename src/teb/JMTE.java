@@ -24,18 +24,43 @@ public class JMTE extends _BenchBase {
     }
     
     @Override
-    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
+        String output;
+        String tmpl = readTemplateFile(template);
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("items", items);
+        while (--ntimes >= 0) {
+            output = engine.transform(tmpl, model);
+            if (ntimes == 0) w1.write(output); 
+            else w0.write(output);
+        }
+    }
+
+    @Override
+    protected void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
+        String output;
+        String tmpl = readTemplateFile(template);
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("items", items);
+        Writer w1 = new OutputStreamWriter(o1);
+        Writer w0 = new OutputStreamWriter(o0);
+        while (--ntimes >= 0) {
+            output = engine.transform(tmpl, model);
+            if (ntimes == 0) w1.write(output);
+            else w0.write(output);
+        }
+    }
+
+    @Override
+    protected String execute(int ntimes, List<Stock> items) throws Exception {
         String output = null;
         String tmpl = readTemplateFile(template);
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("items", items);
         while (--ntimes >= 0) {
-            if (!warmUp && ntimes == 0) output = engine.transform(tmpl, model);
-            else engine.transform(tmpl, model);
+            output = engine.transform(tmpl, model);
         }
-        if (!warmUp) {
-            w1.write(output);
-        }
+        return output;
     }
 
     public static void main(String[] args) throws Exception {

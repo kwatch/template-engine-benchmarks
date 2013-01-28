@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<project name="template-shootout" default="benchmarks" basedir=".">
+<project name="template-shootout" default="selected" basedir=".">
 
     <property name="src" location="src"/>
     <property name="classes" location="classes"/>
     <property name="lib" location="lib"/>
     <property name="output" location="output"/>
     <property environment="env"/>
+    <property name="bench.io" value="os"/>
+    <property name="bench.wtimes" value="100"/>
+    <property name="bench.ntimes" value="10000"/>
 
     <path id="project.class.path">
         <fileset dir="${lib}">
@@ -28,11 +31,26 @@
         <javac srcdir="${src}" destdir="${classes}" includeantruntime="true">
             <classpath refid="project.class.path"/>
         </javac>
+        <echo>
+#################################################################
+            
+            JAVA TEMPLATE ENGINE BENCHMARKER v1.0
+            
+               Output method:   ${bench.io}
+               warm up loops:   ${bench.wtimes}
+               benchmark loops: ${bench.ntimes}
+               
+            type 'ant help' to see help messsage
+################################################################
+        </echo>
     </target>
 
     <target name="velocity" depends="compile">
         <java classname="teb.Velocity" output="output/velocity.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.io" value="${bench.io}"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
             <classpath location="${lib}/velocity-1.7.jar"/>
             <classpath location="${lib}/velocity-1.7-dep.jar"/>
@@ -42,6 +60,8 @@
     <target name="stringbuilder" depends="compile">
         <java classname="teb.StringBuilder" output="output/stringbuilder.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
         </java>
     </target>
@@ -49,6 +69,9 @@
     <target name="jamon" depends="compile">
         <java classname="teb.Jamon" output="output/jamon.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.io" value="${bench.io}"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
@@ -57,6 +80,9 @@
     <target name="rythm" depends="compile">
         <java classname="teb.Rythm" output="output/rythm.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.io" value="${bench.io}"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
@@ -65,6 +91,9 @@
     <target name="beetl" depends="compile">
         <java classname="teb.Beetl" output="output/beetl.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.io" value="${bench.io}"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
@@ -73,6 +102,9 @@
     <target name="freemarker" depends="compile">
         <java classname="teb.FreeMarker" output="output/freemarker.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.io" value="${bench.io}"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
@@ -81,6 +113,9 @@
     <target name="httl" depends="compile">
         <java classname="teb.Httl" output="output/httl.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.io" value="${bench.io}"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
@@ -89,6 +124,9 @@
     <target name="jmte" depends="compile">
         <java classname="teb.JMTE" output="output/jmte.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.io" value="${bench.io}"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
@@ -97,6 +135,9 @@
     <target name="jangod" depends="compile">
         <java classname="teb.Jangod" output="output/jangod.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.io" value="${bench.io}"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
@@ -105,12 +146,44 @@
     <target name="thymeleaf" depends="compile">
         <java classname="teb.Thymeleaf" output="output/thymeleaf.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <sysproperty  key="bench.io" value="${bench.io}"/>
+            <sysproperty  key="bench.wtimes" value="${bench.wtimes}"/>
+            <sysproperty  key="bench.ntimes" value="${bench.ntimes}"/>
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
     </target>
 
-    <target name="benchmarks" depends="stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte,jangod,thymeleaf">
+    <target name="selected" depends="stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte"></target>
+    <target name="all" depends="stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte,jangod,thymeleaf"></target>
+    
+    <target name="help">
+        <echo>
+#################################################################
+            
+            JAVA TEMPLATE ENGINE BENCHMARKER v1.0
+            
+               Output method:   ${bench.io}
+               warm up loops:   ${bench.wtimes}
+               benchmark loops: ${bench.ntimes}
+               
+ This program is running by ant. It has three arguments
+ 
+ 1. bench.io: specify how to output rendering result, could be:
+   * os: output to OutputStream
+   * w:  output to Writer
+   * s:  return String
+   
+ 2. bench.wtimes: specify number of warm up loops
+ 
+ 3. bench.ntimes: specify number of benchmark loops
+ 
+The arguments should be passed in by property setting. e.g
+   
+   ant -Dbench.io=s -Dbench.wtimes=10 -Dbench.ntimes=1000
+ 
+################################################################
+        </echo>
     </target>
 
     <target name="clean">

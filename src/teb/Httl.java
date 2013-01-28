@@ -9,6 +9,7 @@ import java.util.*;
 
 import httl.*;
 import teb.model.Stock;
+import teb.util.DoNothingOutputStream;
 
 public class Httl extends _BenchBase {
 
@@ -24,32 +25,42 @@ public class Httl extends _BenchBase {
     }
 
     @Override
-    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         Map<String, Object> params = new HashMap();
         params.put("items", items);
         while (--ntimes >= 0) {
             Template template = engine.getTemplate(templateFile);
 
-            if (!warmUp && ntimes == 0) template.render(params,w1);
+            if (ntimes == 0) template.render(params,w1);
             else template.render(params, w0);
         }
     }
 
     @Override
-    public void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         Map<String, Object> params = new HashMap();
         params.put("items", items);
         while (--ntimes >= 0) {
             Template template = engine.getTemplate(templateFile);
 
-            if (!warmUp && ntimes == 0) template.render(params,o1);
+            if (ntimes == 0) template.render(params,o1);
             else template.render(params, o0);
         }
     }
 
     @Override
-    protected boolean useStream() {
-        return true;
+    protected String execute(int ntimes, List<Stock> items) throws Exception {
+        Map<String, Object> params = new HashMap();
+        params.put("items", items);
+        ByteArrayOutputStream o0 = new ByteArrayOutputStream();
+        ByteArrayOutputStream o1 = new ByteArrayOutputStream(1024 * 10);
+        while (--ntimes >= 0) {
+            Template template = engine.getTemplate(templateFile);
+
+            if (ntimes == 0) template.render(params,o1);
+            else template.render(params, o0);
+        }
+        return new String(o1.toByteArray());
     }
 
     public static void main(String[] args) throws Exception {

@@ -32,7 +32,7 @@ public class Velocity extends _BenchBase {
     }
 
     @Override
-    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         /// create context data
         VelocityContext context = new VelocityContext();
         context.put("items", items);
@@ -42,13 +42,13 @@ public class Velocity extends _BenchBase {
             /// render template with context data
             Template template = _engine.getTemplate("stocks.vm.html", "UTF-8");
 
-            if (!warmUp && ntimes == 0) template.merge(context, w1);
+            if (ntimes == 0) template.merge(context, w1);
             else template.merge(context, w0);
         }
     }
 
     @Override
-    public void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         /// create context data
         VelocityContext context = new VelocityContext();
         context.put("items", items);
@@ -60,9 +60,28 @@ public class Velocity extends _BenchBase {
             /// render template with context data
             Template template = _engine.getTemplate("stocks.vm.html", "UTF-8");
 
-            if (!warmUp && ntimes == 0) template.merge(context, w1);
+            if (ntimes == 0) template.merge(context, w1);
             else template.merge(context, w0);
         }
+    }
+
+    @Override
+    protected String execute(int ntimes, List<Stock> items) throws Exception {
+        VelocityContext context = new VelocityContext();
+        context.put("items", items);
+        Writer w0 = new StringWriter(1024 * 10);
+        Writer w1 = new StringWriter(1024 * 10);
+        while (--ntimes >= 0) {
+            //EscapeTool esc = new EscapeTool();
+            //context.put("esc", esc);
+            /// render template with context data
+            Template template = _engine.getTemplate("stocks.vm.html", "UTF-8");
+
+            if (ntimes == 0) template.merge(context, w1);
+            else template.merge(context, w0);
+        }
+        
+        return w1.toString();
     }
 
     public static void main(String[] args) {

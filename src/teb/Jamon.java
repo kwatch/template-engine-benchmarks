@@ -5,6 +5,7 @@
 package teb;
 
 import teb.model.Stock;
+import teb.util.DoNothingWriter;
 
 import java.io.*;
 import java.util.List;
@@ -13,15 +14,10 @@ import java.util.List;
 public class Jamon extends _BenchBase {
 
     @Override
-    protected boolean useStream() {
-        return true;
-    }
-
-    @Override
-    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         while (--ntimes >= 0) {
             /// create context data
-            if (!warmUp && ntimes == 0) {
+            if (ntimes == 0) {
                 new jamon.stocks().render(w1, items);
             }
             else new jamon.stocks().render(w0, items);
@@ -29,16 +25,32 @@ public class Jamon extends _BenchBase {
     }
 
     @Override
-    public void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         Writer w0 = new BufferedWriter(new OutputStreamWriter(o0));
         Writer w1 = new BufferedWriter(new OutputStreamWriter(o1));
         while (--ntimes >= 0) {
             /// create context data
-            if (!warmUp && ntimes == 0) {
+            if (ntimes == 0) {
                 new jamon.stocks().render(w1, items);
             }
             else new jamon.stocks().render(w0, items);
         }
+    }
+
+    @Override
+    protected String execute(int ntimes, List<Stock> items) throws Exception {
+        StringWriter w0 = new StringWriter();
+        StringWriter w1 = new StringWriter();
+        while (--ntimes >= 0) {
+            /// create context data
+            if (ntimes == 0) {
+                new jamon.stocks().render(w1, items);
+            } else {
+                new jamon.stocks().render(w0, items);
+            }
+        }
+            
+        return w1.toString();
     }
 
     public static void main(String[] args) {

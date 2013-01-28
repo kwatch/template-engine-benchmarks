@@ -26,16 +26,14 @@ public class Rythm extends _BenchBase {
     }
     
     protected void shutdown() {
-        //engine.shutdown();
+        engine.shutdown();
     }
 
     @Override
-    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
-        String output;
+    public void execute(Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         String tmpl = template;
         while (--ntimes >= 0) {
-            //output = engine.render(tmpl, items);
-            if (!warmUp && ntimes == 0) {
+            if (ntimes == 0) {
                 //w1.write(output);
                 engine.render(w1, tmpl, items);
             } else {
@@ -46,10 +44,10 @@ public class Rythm extends _BenchBase {
     }
 
     @Override
-    public void execute(boolean warmUp, OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
+    public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         String tmpl = template;
         while (--ntimes >= 0) {
-            if (!warmUp && ntimes == 0) {
+            if (ntimes == 0) {
                 engine.render(o1, tmpl, items);
             }
             else {
@@ -59,12 +57,20 @@ public class Rythm extends _BenchBase {
     }
 
     @Override
-    protected boolean useStream() {
-        return true;
+    protected String execute(int ntimes, List<Stock> items) throws Exception {
+        String tmpl = template;
+        String output = null;
+        while (--ntimes >= 0) {
+            output = engine.render(tmpl, items);
+        }
+        return output;
     }
+
 
     public static void main(String[] args) {
         new Rythm().run();
+        //String s = com.greenlaw110.rythm.Rythm.render("hool @abc", "sd");
+        //System.out.println(s);
     }
 
 }

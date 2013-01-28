@@ -12,13 +12,33 @@ import java.io.*;
 public class StringBuilder extends _BenchBase {
 
     @Override
-    public void execute(boolean warmUp, Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {    
+    public void execute(Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {    
+        String output;
+        while (--ntimes >= 0) {
+            output = render(items);
+            if (ntimes == 0) w1.write(output);
+            else w0.write(output);
+        }
+    }
+
+    @Override
+    public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {         String output;
+        Writer w0 = new BufferedWriter(new OutputStreamWriter(o1));
+        Writer w1 = new BufferedWriter(new OutputStreamWriter(o1));
+        while (--ntimes >= 0) {
+            output = render(items);
+            if (ntimes == 0) w1.write(output);
+            else w0.write(output);
+        }
+    }
+
+    @Override
+    protected String execute(int ntimes, List<Stock> items) throws Exception {
         String output = null;
         while (--ntimes >= 0) {
             output = render(items);
-            if (!warmUp && ntimes == 0) w1.write(output);
-            else w0.write(output);
         }
+        return output;
     }
 
     public String render(List<Stock> items) {
