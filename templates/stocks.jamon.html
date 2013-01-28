@@ -62,7 +62,7 @@ thead {
    </thead>
    <tbody>
 <%for Stock item: items %>
-    <%java>klass = (lc++ % 2 == 0) ? "even" : "odd"; change = item.getChange();</%java>
+    <%java>klass = (lc++ % 2 == 0) ? "odd" : "even"; change = item.getChange();</%java>
     <tr class="<% klass %>">
      <td style="text-align: center"><% lc %></td>
      <td>

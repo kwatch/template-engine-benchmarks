@@ -19,10 +19,10 @@ public class Rythm extends _BenchBase {
     public Rythm() {
         Properties p = new Properties();
         p.put("rythm.cache.enabled", false);
-        //p.put("rythm.logger.disabled", true);
-        p.put("rythm.tmpDir", "c:\\tmp");
+        p.put("rythm.logger.disabled", true);
+        //p.put("rythm.tmpDir", "c:\\tmp");
         //p.put("rythm.mode", "dev");
-        engine = new RythmEngine(p);//.enterSandbox();
+        engine = new RythmEngine(p);
     }
     
     protected void shutdown() {
@@ -60,7 +60,7 @@ public class Rythm extends _BenchBase {
 
     @Override
     protected boolean useStream() {
-        return false;
+        return true;
     }
 
     public static void main(String[] args) {

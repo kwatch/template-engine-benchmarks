@@ -52,8 +52,8 @@ thead {
    </thead>
    <tbody>
    
-    <tr th:each="item,iterStat: ${items}" th:class="${iterStat.odd} ? 'odd' : 'even'">
-     <td style="text-align: center" th:text="${iterStat.index }"></td>
+    <tr th:each="item,iterStat: ${items}" th:class="${iterStat.odd} ? 'even' : 'odd'">
+     <td style="text-align: center" th:text="${iterStat.index+1}"></td>
      <td>
       <a th:href="${'/stocks/' + item.symbol}" th:text="${item.symbol}"></a>
      </td>
