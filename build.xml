@@ -10,6 +10,7 @@
     <property name="wtimes" value="100"/>
     <property name="ntimes" value="10000"/>
     <property name="buf" value="false"/>
+    <property name="rythm.new" value="false"/>
 
     <path id="project.class.path">
         <fileset dir="${lib}">
@@ -32,19 +33,6 @@
         <javac srcdir="${src}" destdir="${classes}" includeantruntime="true">
             <classpath refid="project.class.path"/>
         </javac>
-        <echo>
-#################################################################
-            
-            JAVA TEMPLATE ENGINE BENCHMARKER v1.0
-            
-               Output method:   ${out}
-               warm up loops:   ${wtimes}
-               benchmark loops: ${ntimes}
-               buffer mode:     ${buf}
-               
-            type 'ant help' to see help messsage
-################################################################
-        </echo>
     </target>
 
     <target name="velocity" depends="compile">
@@ -89,6 +77,7 @@
             <sysproperty  key="wtimes" value="${wtimes}"/>
             <sysproperty  key="ntimes" value="${ntimes}"/>
             <sysproperty  key="buf" value="${buf}"/>
+            <sysproperty  key="rythm.new" value="${rythm.new}"/>
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
@@ -165,9 +154,26 @@
             <classpath refid="project.class.path"/>
         </java>
     </target>
+    
+    <target name="header">
+        <echo>
+#################################################################
+            
+            JAVA TEMPLATE ENGINE BENCHMARKER v1.0
+            
+               Output method:   ${out}
+               warm up loops:   ${wtimes}
+               benchmark loops: ${ntimes}
+               buffer mode:     ${buf}
+               rythm new API:   ${rythm.new}
+               
+            type 'ant help' to see help messsage
+################################################################
+        </echo>
+    </target>
 
-    <target name="selected" depends="stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte"></target>
-    <target name="all" depends="stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte,jangod,thymeleaf"></target>
+    <target name="selected" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte"></target>
+    <target name="all" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte,jangod,thymeleaf"></target>
     
     <target name="help">
         <echo>
@@ -179,6 +185,7 @@
                warm up loops:   ${wtimes}
                benchmark loops: ${ntimes}
                buffer mode:     ${buf}
+               rythm new API:   ${rythm.new}
                
  This program is running by ant. It has four arguments:
  
@@ -196,12 +203,16 @@
  4. buf: specify whether use BufferedWriter or OS
     default: true
  
+ In addition for Rythm you can specify whether to launch it
+ with new API use "rythm.new" parameter. default: false
+
  The arguments should be passed in by property setting. e.g
    
    ant -Dout=w \ 
        -Dwtimes=10 \ 
        -Dntimes=1000 \
-       -Dbuf=false
+       -Dbuf=false \
+       -Drythm.new=true
  
 ################################################################
         </echo>

@@ -32,13 +32,24 @@ public class Rythm extends _BenchBase {
     @Override
     public void execute(Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         String tmpl = template;
-        String output;
-        while (--ntimes >= 0) {
-            output = engine.render(tmpl, items);
-            if (ntimes == 0) {
-                w1.write(output);
-            } else {
-                w0.write(output);
+        boolean newAPI = Boolean.parseBoolean(System.getProperty("rythm.new", "false"));
+        if (newAPI) {
+            while (--ntimes >= 0) {
+                if (ntimes == 0) {
+                    engine.render(w1, tmpl, items);
+                } else {
+                    engine.render(w0, tmpl, items);
+                }
+            }
+        } else {
+            String output;
+            while (--ntimes >= 0) {
+                output = engine.render(tmpl, items);
+                if (ntimes == 0) {
+                    w1.write(output);
+                } else {
+                    w0.write(output);
+                }
             }
         }
     }
@@ -46,19 +57,30 @@ public class Rythm extends _BenchBase {
     @Override
     public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         String tmpl = template;
-        String output;
-        Writer w0 = new OutputStreamWriter(o0);
-        Writer w1 = new OutputStreamWriter(o1);
-        if (_BenchBase.bufferMode.get()) {
-            w0 = new BufferedWriter(w0);
-            w1 = new BufferedWriter(w1);
-        }
-        while (--ntimes >= 0) {
-            output = engine.render(tmpl, items);
-            if (ntimes == 0) {
-                w1.write(output);
-            } else {
-                w0.write(output);
+        boolean newAPI = Boolean.parseBoolean(System.getProperty("rythm.new", "false"));
+        if (newAPI) {
+            while (--ntimes >= 0) {
+                if (ntimes == 0) {
+                    engine.render(o1, tmpl, items);
+                } else {
+                    engine.render(o0, tmpl, items);
+                }
+            }
+        } else {
+            String output;
+            Writer w0 = new OutputStreamWriter(o0);
+            Writer w1 = new OutputStreamWriter(o1);
+            if (_BenchBase.bufferMode.get()) {
+                w0 = new BufferedWriter(w0);
+                w1 = new BufferedWriter(w1);
+            }
+            while (--ntimes >= 0) {
+                output = engine.render(tmpl, items);
+                if (ntimes == 0) {
+                    w1.write(output);
+                } else {
+                    w0.write(output);
+                }
             }
         }
     }
