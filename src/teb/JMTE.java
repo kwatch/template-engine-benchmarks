@@ -31,7 +31,10 @@ public class JMTE extends _BenchBase {
         model.put("items", items);
         while (--ntimes >= 0) {
             output = engine.transform(tmpl, model);
-            if (ntimes == 0) w1.write(output); 
+            if (ntimes == 0) {
+                w1.write(output);
+                w1.close();
+            } 
             else w0.write(output);
         }
     }
@@ -50,7 +53,10 @@ public class JMTE extends _BenchBase {
         }
         while (--ntimes >= 0) {
             output = engine.transform(tmpl, model);
-            if (ntimes == 0) w1.write(output);
+            if (ntimes == 0) {
+                w1.write(output);
+                w1.close();
+            }
             else w0.write(output);
         }
     }

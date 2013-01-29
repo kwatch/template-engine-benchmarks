@@ -31,7 +31,10 @@ public class Httl extends _BenchBase {
         while (--ntimes >= 0) {
             Template template = engine.getTemplate(templateFile);
 
-            if (ntimes == 0) template.render(params,w1);
+            if (ntimes == 0) {
+                template.render(params,w1);
+                w1.close();
+            }
             else template.render(params, w0);
         }
     }
@@ -43,7 +46,10 @@ public class Httl extends _BenchBase {
         while (--ntimes >= 0) {
             Template template = engine.getTemplate(templateFile);
 
-            if (ntimes == 0) template.render(params,o1);
+            if (ntimes == 0) {
+                template.render(params,o1);
+                o1.close();
+            }
             else template.render(params, o0);
         }
     }
@@ -61,7 +67,10 @@ public class Httl extends _BenchBase {
         while (--ntimes >= 0) {
             Template template = engine.getTemplate(templateFile);
 
-            if (ntimes == 0) template.render(params,w1);
+            if (ntimes == 0) {
+                template.render(params,w1);
+                w1.close();
+            }
             else template.render(params, w0);
         }
         return w1.toString();

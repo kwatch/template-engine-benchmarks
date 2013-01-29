@@ -37,7 +37,10 @@ public class Beetl extends _BenchBase {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
             
-            if (ntimes == 0) template.getText(w1);
+            if (ntimes == 0) {
+                template.getText(w1);
+                w1.close();
+            }
             else template.getText(w0);
         }
     }
@@ -50,7 +53,10 @@ public class Beetl extends _BenchBase {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
             
-            if (ntimes == 0) template.getText(o1);
+            if (ntimes == 0) {
+                template.getText(o1);
+                o1.close();
+            }
             else template.getText(o0);
         }
     }
@@ -67,7 +73,10 @@ public class Beetl extends _BenchBase {
             Template template = group.getFileTemplate("/stocks.beetl.html");
             template.set("items", items);
             
-            if (ntimes == 0) template.getText(w1);
+            if (ntimes == 0) {
+                template.getText(w1);
+                w1.close();
+            }
             else template.getText(w0);
         }
         

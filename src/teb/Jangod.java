@@ -34,7 +34,10 @@ public class Jangod extends _BenchBase {
         params.put("items", items);
         while (--ntimes >= 0) {
             output = engine.process(tmpl, params);
-            if (ntimes == 0) w1.write(output);
+            if (ntimes == 0) {
+                w1.write(output);
+                w1.close();
+            }
             else w0.write(output);
         }
     }
@@ -53,7 +56,10 @@ public class Jangod extends _BenchBase {
         }
         while (--ntimes >= 0) {
             output = engine.process(tmpl, params);
-            if (ntimes == 0) w1.write(output);
+            if (ntimes == 0) {
+                w1.write(output);
+                w1.close();
+            }
             else w0.write(output);
         }
     }

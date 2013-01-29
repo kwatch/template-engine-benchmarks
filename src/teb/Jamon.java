@@ -19,6 +19,7 @@ public class Jamon extends _BenchBase {
             /// create context data
             if (ntimes == 0) {
                 new jamon.stocks().render(w1, items);
+                w1.close();
             }
             else new jamon.stocks().render(w0, items);
         }
@@ -26,12 +27,17 @@ public class Jamon extends _BenchBase {
 
     @Override
     public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
-        Writer w0 = new BufferedWriter(new OutputStreamWriter(o0));
-        Writer w1 = new BufferedWriter(new OutputStreamWriter(o1));
+        Writer w0 = new OutputStreamWriter(o0);
+        Writer w1 = new OutputStreamWriter(o1);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             /// create context data
             if (ntimes == 0) {
                 new jamon.stocks().render(w1, items);
+                w1.close();
             }
             else new jamon.stocks().render(w0, items);
         }
@@ -49,6 +55,7 @@ public class Jamon extends _BenchBase {
             /// create context data
             if (ntimes == 0) {
                 new jamon.stocks().render(w1, items);
+                w1.close();
             } else {
                 new jamon.stocks().render(w0, items);
             }

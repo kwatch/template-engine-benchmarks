@@ -27,7 +27,10 @@ public class FreeMarker extends _BenchBase {
         while (--ntimes >= 0) {
             Template template = cfg.getTemplate("stocks.ftl.html");
 
-            if (ntimes == 0) template.process(root,w1);
+            if (ntimes == 0) {
+                template.process(root,w1);
+                w1.close();
+            }
             else template.process(root, w0);
         }
     }
@@ -45,7 +48,10 @@ public class FreeMarker extends _BenchBase {
         while (--ntimes >= 0) {
             Template template = cfg.getTemplate("stocks.ftl.html");
 
-            if (ntimes == 0) template.process(root, w1);
+            if (ntimes == 0) {
+                template.process(root, w1);
+                w1.close();
+            }
             else template.process(root, w0);
         }
     }
@@ -63,7 +69,10 @@ public class FreeMarker extends _BenchBase {
         while (--ntimes >= 0) {
             Template template = cfg.getTemplate("stocks.ftl.html");
 
-            if (ntimes == 0) template.process(root, w1);
+            if (ntimes == 0) {
+                template.process(root, w1);
+                w1.close();
+            }
             else template.process(root, w0);
         }
 

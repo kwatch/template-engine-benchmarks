@@ -42,7 +42,10 @@ public class Velocity extends _BenchBase {
             /// render template with context data
             Template template = _engine.getTemplate("stocks.vm.html", "UTF-8");
 
-            if (ntimes == 0) template.merge(context, w1);
+            if (ntimes == 0) {
+                template.merge(context, w1);
+                w1.close();
+            }
             else template.merge(context, w0);
         }
     }
@@ -52,15 +55,22 @@ public class Velocity extends _BenchBase {
         /// create context data
         VelocityContext context = new VelocityContext();
         context.put("items", items);
-        Writer w0 = new BufferedWriter(new OutputStreamWriter(o0));
-        Writer w1 = new BufferedWriter(new OutputStreamWriter(o1));
+        Writer w0 = new OutputStreamWriter(o0);
+        Writer w1 = new OutputStreamWriter(o1);
+        if (_BenchBase.bufferMode.get()) {
+            w0 = new BufferedWriter(w0);
+            w1 = new BufferedWriter(w1);
+        }
         while (--ntimes >= 0) {
             //EscapeTool esc = new EscapeTool();
             //context.put("esc", esc);
             /// render template with context data
             Template template = _engine.getTemplate("stocks.vm.html", "UTF-8");
 
-            if (ntimes == 0) template.merge(context, w1);
+            if (ntimes == 0) {
+                template.merge(context, w1);
+                w1.close();
+            }
             else template.merge(context, w0);
         }
     }
@@ -81,7 +91,10 @@ public class Velocity extends _BenchBase {
             /// render template with context data
             Template template = _engine.getTemplate("stocks.vm.html", "UTF-8");
 
-            if (ntimes == 0) template.merge(context, w1);
+            if (ntimes == 0) {
+                template.merge(context, w1);
+                w1.close();
+            }
             else template.merge(context, w0);
         }
         

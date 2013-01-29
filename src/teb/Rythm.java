@@ -37,6 +37,7 @@ public class Rythm extends _BenchBase {
             while (--ntimes >= 0) {
                 if (ntimes == 0) {
                     engine.render(w1, tmpl, items);
+                    w1.close();
                 } else {
                     engine.render(w0, tmpl, items);
                 }
@@ -47,6 +48,7 @@ public class Rythm extends _BenchBase {
                 output = engine.render(tmpl, items);
                 if (ntimes == 0) {
                     w1.write(output);
+                    w1.close();
                 } else {
                     w0.write(output);
                 }
@@ -62,6 +64,7 @@ public class Rythm extends _BenchBase {
             while (--ntimes >= 0) {
                 if (ntimes == 0) {
                     engine.render(o1, tmpl, items);
+                    o1.close();
                 } else {
                     engine.render(o0, tmpl, items);
                 }
@@ -78,6 +81,7 @@ public class Rythm extends _BenchBase {
                 output = engine.render(tmpl, items);
                 if (ntimes == 0) {
                     w1.write(output);
+                    w1.close();
                 } else {
                     w0.write(output);
                 }
@@ -97,6 +101,8 @@ public class Rythm extends _BenchBase {
 
 
     public static void main(String[] args) {
+        //System.setProperty("out", "w");
+        System.setProperty("buf", "true");
         new Rythm().run();
         //String s = com.greenlaw110.rythm.Rythm.render("hool @abc", "sd");
         //System.out.println(s);

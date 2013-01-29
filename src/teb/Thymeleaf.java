@@ -34,7 +34,10 @@ public class Thymeleaf extends _BenchBase {
         params.put("items", items);
         IContext ctx = new Context(Locale.getDefault(), params);
         while (--ntimes >= 0) {
-            if (ntimes == 0) engine.process("templates/stocks.thymeleaf.html", ctx, w1);
+            if (ntimes == 0) {
+                engine.process("templates/stocks.thymeleaf.html", ctx, w1);
+                w1.close();
+            }
             else engine.process("templates/stocks.thymeleaf.html", ctx, w0);
         }
     }
@@ -51,7 +54,10 @@ public class Thymeleaf extends _BenchBase {
             w1 = new BufferedWriter(w1);
         }
         while (--ntimes >= 0) {
-            if (ntimes == 0) engine.process("templates/stocks.thymeleaf.html", ctx, w1);
+            if (ntimes == 0) {
+                engine.process("templates/stocks.thymeleaf.html", ctx, w1);
+                w1.close();
+            }
             else engine.process("templates/stocks.thymeleaf.html", ctx, w0);
         }
     }
@@ -68,7 +74,10 @@ public class Thymeleaf extends _BenchBase {
             w1 = new BufferedWriter(w1);
         }
         while (--ntimes >= 0) {
-            if (ntimes == 0) engine.process("templates/stocks.thymeleaf.html", ctx, w1);
+            if (ntimes == 0) {
+                engine.process("templates/stocks.thymeleaf.html", ctx, w1);
+                w1.close();
+            }
             else engine.process("templates/stocks.thymeleaf.html", ctx, w0);
         }
 
