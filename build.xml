@@ -198,7 +198,7 @@ This program accept parameters to configure how to run the benchmark:
     default: 10000
 
  4. buf: specify whether use BufferedWriter or OS
-    default: true
+    default: false
     
  5. rythm.new: for rythm engine only. specify whether use new API to
     run rythm benchmark or not. Default: false
