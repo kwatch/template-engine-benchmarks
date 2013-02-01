@@ -6,9 +6,9 @@ This is a benchmark program for a collection of Java template engines:
   * stringbuilder - the baseline. manually created page using StringBulder
   * freemarker - v2.3.19
   * velocity - v1.7
-  * rythm - v1.0-b2-SNAPSHOT
-  * httl - 1.0.5
-  * beetl - 1.2Beta
+  * rythm - v1.0-b2
+  * httl - 1.0.7
+  * beetl - 1.2
   * jamon - 2.3
   * jangod - no version info
   * thymeleaf - 2.0.15
@@ -43,3 +43,5 @@ The arguments should be passed in using property setting. e.g
 
 Should you have any suggestion or comments, please raise issue via 
 https://github.com/greenlaw110/template-engine-benchmarks/issues
+
+Note since jangod and thymeleaf is way slow than all others, they are not put into the default target. To benchmark jangod and thymeleaf, run `ant all`

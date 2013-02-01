@@ -213,6 +213,8 @@ The arguments should be passed in using property setting. e.g
 
 Should you have any suggestion or comments, please raise issue via 
 https://github.com/greenlaw110/template-engine-benchmarks/issues
+
+Note since jangod and thymeleaf is way slow than all others, they are not put into the default target. To benchmark jangod and thymeleaf also, run `ant all`
         </echo>
     </target>
 
