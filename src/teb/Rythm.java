@@ -18,10 +18,13 @@ public class Rythm extends _BenchBase {
     
     public Rythm() {
         Properties p = new Properties();
-        p.put("rythm.cache.enabled", false);
-        p.put("rythm.logger.disabled", true);
-        //p.put("rythm.tmpDir", "c:\\tmp");
-        //p.put("rythm.mode", "dev");
+        p.put("log.enabled", "false");
+        p.put("feature.smart_escape.enabled", "false");
+        p.put("feature.transform.enabled", "false");
+        //p.put("codegen.compact.enabled", "false");
+        //p.put("home.template", "p:/template-engine-benchmarks");
+        //p.put("home.tmp", "c:\\tmp");
+        //p.put("engine.mode", "dev");
         engine = new RythmEngine(p);
     }
     
@@ -102,7 +105,9 @@ public class Rythm extends _BenchBase {
 
     public static void main(String[] args) {
         //System.setProperty("out", "w");
-        System.setProperty("buf", "true");
+        //System.setProperty("buf", "true");
+        //System.setProperty("wtimes", "0");
+        //System.setProperty("ntimes", "1");
         new Rythm().run();
         //String s = com.greenlaw110.rythm.Rythm.render("hool @abc", "sd");
         //System.out.println(s);

@@ -51,7 +51,6 @@ thead {
     </tr>
    </thead>
    <tbody>
-   
 @**
  * Rythm is a static typed template, you need to 
  * declare variables and you can import any 
@@ -59,14 +58,12 @@ thead {
  *@
 @import teb.model.Stock
 @args java.util.List<Stock> items
-
 @**
  * by default rythm escape all expression output
  * here we use @raw() to prevent escaping as 
  * we know these are safe data
  *@
 @raw() {
-
 @**
  * Special notes to this @for loop
  *
@@ -80,35 +77,35 @@ thead {
  * type to the iterating element, otherwise Rythm will give it a type
  * 'java.lang.Object'
  *@
-@for(item: items) {
-    <tr class="@item_parity">
-    @// Rythm allow you to declare local variables and call any java methods inside @{ and }
-    @{
-        String symbol = item.getSymbol(); 
-        double change = item.getChange();
+    @for(item: items) {
+        <tr class="@item_parity">
+        @// Rythm allow you to declare local variables and call any java methods inside @{ and }
+        @{ 
+            String symbol = item.getSymbol(); 
+            double change = item.getChange();
+        }
+         <td style="text-align: center">@item_index</td>
+         <td>
+          <a href="/stocks/@symbol">@symbol</a>
+         </td>
+         <td>
+          @// unlike Velocity and other dynamic template engine, Rythm
+          @// does not support JavaBean spec, ie. call to @item.url 
+          @// automatically transferred to @item.getUrl()
+          <a href="@item.getUrl()">@(item.getName())</a>
+         </td>
+         <td>
+          <strong>@item.getPrice()</strong>
+         </td>
+         @if (change < 0.0) {
+         <td class="minus">@change</td>
+         <td class="minus">@item.getRatio()</td>
+         } else {
+         <td>@change</td>
+         <td>@item.getRatio()</td>
+         }
+        </tr>
     }
-     <td style="text-align: center">@item_index</td>
-     <td>
-      <a href="/stocks/@symbol">@symbol</a>
-     </td>
-     <td>
-      @// unlike Velocity and other dynamic template engine, Rythm
-      @// does not support JavaBean spec, ie. call to @item.url 
-      @// automatically transferred to @item.getUrl()
-      <a href="@item.getUrl()">@(item.getName())</a>
-     </td>
-     <td>
-      <strong>@item.getPrice()</strong>
-     </td>
-     @if (change < 0.0) {
-     <td class="minus">@change</td>
-     <td class="minus">@item.getRatio()</td>
-     } else {
-     <td>@change</td>
-     <td>@item.getRatio()</td>
-     }
-    </tr>
-}
 }
    </tbody>
   </table>
