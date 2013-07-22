@@ -73,6 +73,7 @@
     <target name="rythm" depends="compile">
         <java classname="teb.Rythm" output="output/rythm.html" logError="true" fork="true">
             <jvmarg value="-server"/>
+            <!--<jvmarg value="-javaagent:shiftone-jrat.jar"/>-->
             <sysproperty  key="out" value="${out}"/>
             <sysproperty  key="wtimes" value="${wtimes}"/>
             <sysproperty  key="ntimes" value="${ntimes}"/>
@@ -172,8 +173,8 @@
         </echo>
     </target>
 
-    <target name="selected" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte"></target>
-    <target name="all" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,beetl,httl,jmte,jangod,thymeleaf"></target>
+    <target name="selected" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,httl,jmte"></target>
+    <target name="all" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,httl,jmte,jangod,thymeleaf"></target>
     
     <target name="help">
         <echo>

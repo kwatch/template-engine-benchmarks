@@ -7,7 +7,8 @@ package teb;
 import java.io.*;
 import java.util.*;
 
-import com.greenlaw110.rythm.*;
+import org.rythmengine.*;
+import org.rythmengine.template.*;
 import teb.model.Stock;
 
 
@@ -18,13 +19,17 @@ public class Rythm extends _BenchBase {
     
     public Rythm() {
         Properties p = new Properties();
-        p.put("log.enabled", "false");
-        p.put("feature.smart_escape.enabled", "false");
-        p.put("feature.transform.enabled", "false");
+        p.put("log.enabled", false);
+        p.put("feature.smart_escape.enabled", false);
+        p.put("feature.transform.enabled", false);
+        //p.put("codegen.dynamic_exp.enabled", true);
+        //p.put("built_in.code_type", "false");
+        //p.put("built_in.transformer", "false");
+        //p.put("engine.file_write", "false");
         //p.put("codegen.compact.enabled", "false");
         //p.put("home.template", "p:/template-engine-benchmarks");
         //p.put("home.tmp", "c:\\tmp");
-        //p.put("engine.mode", "dev");
+        //p.put("engine.mode", Rythm.Mode.dev);
         engine = new RythmEngine(p);
     }
     
@@ -35,7 +40,7 @@ public class Rythm extends _BenchBase {
     @Override
     public void execute(Writer w0, Writer w1, int ntimes, List<Stock> items) throws Exception {
         String tmpl = template;
-        boolean newAPI = Boolean.parseBoolean(System.getProperty("rythm.new", "false"));
+        boolean newAPI = Boolean.parseBoolean(System.getProperty("rythm.new", "true"));
         if (newAPI) {
             while (--ntimes >= 0) {
                 if (ntimes == 0) {
@@ -62,7 +67,7 @@ public class Rythm extends _BenchBase {
     @Override
     public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         String tmpl = template;
-        boolean newAPI = Boolean.parseBoolean(System.getProperty("rythm.new", "false"));
+        boolean newAPI = Boolean.parseBoolean(System.getProperty("rythm.new", "true"));
         if (newAPI) {
             while (--ntimes >= 0) {
                 if (ntimes == 0) {
