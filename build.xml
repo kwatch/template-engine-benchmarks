@@ -155,7 +155,19 @@
             <classpath refid="project.class.path"/>
         </java>
     </target>
-    
+
+    <target name="mustache" depends="compile">
+        <java classname="teb.MustacheBenchmark" output="output/mustache.html" logError="true" fork="true">
+            <jvmarg value="-server"/>
+            <sysproperty  key="out" value="${out}"/>
+            <sysproperty  key="wtimes" value="${wtimes}"/>
+            <sysproperty  key="ntimes" value="${ntimes}"/>
+            <sysproperty  key="buf" value="${buf}"/>
+            <classpath location="classes"/>
+            <classpath refid="project.class.path"/>
+        </java>
+    </target>
+   
     <target name="header">
         <echo>
 #################################################################
@@ -173,8 +185,8 @@
         </echo>
     </target>
 
-    <target name="selected" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,httl,jmte"></target>
-    <target name="all" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,httl,jmte,jangod,thymeleaf"></target>
+    <target name="selected" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,httl,jmte,mustache"></target>
+    <target name="all" depends="header,stringbuilder,freemarker,velocity,rythm,jamon,httl,jmte,jangod,thymeleaf,mustache"></target>
     
     <target name="help">
         <echo>
