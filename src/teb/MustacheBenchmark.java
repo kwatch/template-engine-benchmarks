@@ -1,12 +1,7 @@
 package teb;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 import teb.model.Stock;
 
