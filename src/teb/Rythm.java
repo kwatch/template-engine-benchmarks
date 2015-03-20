@@ -4,12 +4,15 @@
  */
 package teb;
 
-import java.io.*;
-import java.util.*;
-
-import org.rythmengine.*;
-import org.rythmengine.template.*;
+import org.rythmengine.RythmEngine;
 import teb.model.Stock;
+
+import java.io.BufferedWriter;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.List;
+import java.util.Properties;
 
 
 public class Rythm extends _BenchBase {
@@ -67,7 +70,7 @@ public class Rythm extends _BenchBase {
     @Override
     public void execute(OutputStream o0, OutputStream o1, int ntimes, List<Stock> items) throws Exception {
         String tmpl = template;
-        boolean newAPI = Boolean.parseBoolean(System.getProperty("rythm.new", "true"));
+        boolean newAPI = Boolean.parseBoolean(System.getProperty("rythm.new", "false"));
         if (newAPI) {
             while (--ntimes >= 0) {
                 if (ntimes == 0) {

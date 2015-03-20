@@ -4,12 +4,18 @@
  */
 package teb;
 
-import java.io.*;
-import java.util.*;
-
-import httl.*;
+import httl.Engine;
+import httl.Template;
 import teb.model.Stock;
-import teb.util.DoNothingOutputStream;
+
+import java.io.BufferedWriter;
+import java.io.OutputStream;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 public class Httl extends _BenchBase {
 

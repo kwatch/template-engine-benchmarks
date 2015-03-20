@@ -4,14 +4,13 @@
  */
 package teb;
 
-import java.io.*;
-import java.util.*;
-
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
 import org.bee.tl.core.io.OutputStreamByteWriter;
 import teb.model.Stock;
-import teb.util.DoNothingOutputStream;
+
+import java.io.*;
+import java.util.List;
 
 
 public class Beetl extends _BenchBase {

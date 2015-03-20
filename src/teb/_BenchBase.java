@@ -38,8 +38,8 @@ abstract public class _BenchBase implements Runnable {
 
     @Override
     public void run() {
-        int wtimes = Integer.parseInt(System.getProperty("wtimes", "0"));
-        int ntimes = Integer.parseInt(System.getProperty("ntimes", "1"));
+        int wtimes = Integer.parseInt(System.getProperty("wtimes", "100"));
+        int ntimes = Integer.parseInt(System.getProperty("ntimes", "100000000"));
         boolean useBuffer = Boolean.parseBoolean(System.getProperty("buf", "false"));
         bufferMode.set(useBuffer);
         String s = System.getProperty("out", "os");
