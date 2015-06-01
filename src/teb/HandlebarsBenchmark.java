@@ -85,8 +85,8 @@ public class HandlebarsBenchmark extends _BenchBase {
     }
 
     private boolean getFlag(String name) {
-        String prop = System.getProperty(name, null);
-        boolean flag = prop != null && !prop.equalsIgnoreCase("false");
+        String prop = System.getProperty(name, "");
+        boolean flag = !prop.equals("") && !prop.equalsIgnoreCase("false");
         return flag;
     }
 

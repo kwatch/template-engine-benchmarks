@@ -11,6 +11,9 @@
     <property name="ntimes" value="10000"/>
     <property name="buf" value="false"/>
     <property name="rythm.new" value="false"/>
+    <property name="handlebars.defaultTemplateLoader" value="false"/>
+    <property name="handlebars.defaultCache" value="false"/>
+
 
     <path id="project.class.path">
         <fileset dir="${lib}">
@@ -174,7 +177,11 @@
             <sysproperty  key="out" value="${out}"/>
             <sysproperty  key="wtimes" value="${wtimes}"/>
             <sysproperty  key="ntimes" value="${ntimes}"/>
-            <sysproperty  key="buf" value="${buf}"/>
+            <sysproperty  key="buf" value="${buf}"/>	
+        	<sysproperty  key="handlebars.defaultTemplateLoader" 
+        		value="${handlebars.defaultTemplateLoader}" />
+        	<sysproperty  key="handlebars.defaultCache" 
+        		value="${handlebars.defaultTemplateLoader}" />
             <classpath location="classes"/>
             <classpath refid="project.class.path"/>
         </java>
