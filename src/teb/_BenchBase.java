@@ -88,7 +88,9 @@ abstract public class _BenchBase implements Runnable {
             /// report result
             switch (outMode) {
                 case os: output = baos.toString("utf-8"); break;
-                case w: output = w.toString();
+                case w: output = w.toString(); break;
+				case s:
+					break;
             }
             System.err.println("ntimes: " + ntimes + ", real time: " + (end_t - start_t) + "(msec)");
             System.out.print(output);
