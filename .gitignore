@@ -1,0 +1,6 @@
+output.*
+output/
+out/
+.idea/
+*.iml
+classes

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+  <title>Stock Prices - Rythm</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" media="all" />
+  <script type="text/javascript" src="/js/util.js"></script>
+  <style type="text/css">
+  /*<![CDATA[*/
+
+body {
+    color: #333333;
+    line-height: 150%;
+}
+
+thead {
+    font-weight: bold;
+    background-color: #CCCCCC;
+}
+
+.odd {
+    background-color: #FFCCCC;
+}
+
+.even {
+    background-color: #CCCCFF;
+}
+
+.minus {
+    color: #FF0000;
+}
+
+  /*]]>*/
+  </style>
+
+ </head>
+
+ <body>
+
+  <h1>Stock Prices- Rythm</h1>
+
+  <table>
+   <thead>
+    <tr>
+     <th>#</th><th>symbol</th><th>name</th><th>price</th><th>change</th><th>ratio</th>
+    </tr>
+   </thead>
+   <tbody>
+@**
+ * Rythm is a static typed template, you need to 
+ * declare variables and you can import any 
+ * packages and classes used in the template
+ *@
+@import teb.model.Stock
+@args java.util.List<Stock> items
+@**
+ * by default rythm escape all expression output
+ * here we use @raw() to prevent escaping as 
+ * we know these are safe data
+ *@
+@raw() {
+@**
+ * Special notes to this @for loop
+ *
+ * Rythm do it's best to speculate the Type of the iterating element
+ * In our case, because you have already declared [items]'s type as 
+ * 'List<Stock>', so Rythm knows that the type of [item] is 'Stock', 
+ * so you are safe to omit 'Stock' before [item].
+ *
+ * However if your iterable is an expression than a variable name or
+ * it is not a declared as a template variable then you must give a
+ * type to the iterating element, otherwise Rythm will give it a type
+ * 'java.lang.Object'
+ *@
+    @for(item: items) {
+        <tr class="@item_parity">
+        @// Rythm allow you to declare local variables and call any java methods inside @{ and }
+        @{ 
+            String symbol = item.getSymbol(); 
+            double change = item.getChange();
+        }
+         <td style="text-align: center">@item_index</td>
+         <td>
+          <a href="/stocks/@symbol">@symbol</a>
+         </td>
+         <td>
+          @// unlike Velocity and other dynamic template engine, Rythm
+          @// does not support JavaBean spec, ie. call to @item.url 
+          @// automatically transferred to @item.getUrl()
+          <a href="@item.getUrl()">@(item.getName())</a>
+         </td>
+         <td>
+          <strong>@item.getPrice()</strong>
+         </td>
+         @if (change < 0.0) {
+         <td class="minus">@change</td>
+         <td class="minus">@item.getRatio()</td>
+         } else {
+         <td>@change</td>
+         <td>@item.getRatio()</td>
+         }
+        </tr>
+    }
+}
+   </tbody>
+  </table>
+
+ </body>
+</html>
